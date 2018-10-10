@@ -7,10 +7,10 @@ export default class App extends React.Component {
       <View style={styles.container}>
 		<Image
 			style={{width: 50, height: 50}}
-			source={{uri: 'https://qualuuniemh2.000webhostapp.com/upload/hp_big_img.jpg'}}
+			source={{uri: 'https://qualuuniemh2.000webhostapp.com/upload/logo.png'}}
 		/>
 	 
-        <Text>Test!</Text>
+        <Text>Quà lưu niệm H2</Text>
       </View>
     );
   }
