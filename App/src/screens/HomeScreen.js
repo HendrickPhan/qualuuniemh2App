@@ -4,7 +4,7 @@ import { AppRegistry, TextInput } from 'react-native';
 import { Button } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import { LoginScreen } from './LoginScreen';
-
+import { AsyncStorage } from "react-native"
 
 class HomeScreen extends Component{
 	constructor(props) {
@@ -15,12 +15,24 @@ class HomeScreen extends Component{
 		  PasswordText: 'Mật khẩu',
 		};
 	}
+	
+	onPressCheck = () => {
+		AsyncStorage.getItem('USER_TOKEN_', (err, result) => {
+					  alert(result);
+				  });
+	}
 	onPressLearnMore() {
 	}
 	render(){
 		return (
 			<View style={styles.container}>
 				<Text style ={styles.titleText}>{this.state.titleText}</Text>
+				
+				<Button
+				  onPress={this.onPressCheck}
+				  title="check"
+				  color="#841584"
+				/>
 			</View>
 			
 		);

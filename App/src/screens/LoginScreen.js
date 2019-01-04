@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import{View, Text, StyleSheet} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
 import { Button } from 'react-native';
+import { AsyncStorage } from "react-native"
+
 
 export class LoginScreen extends Component{
 	constructor(props) {
@@ -10,9 +12,48 @@ export class LoginScreen extends Component{
 		  titleText: "Đăng nhập",
 		  UserText: 'Tên đăng nhập',
 		  PasswordText: 'Mật khẩu',
+		  userName: '',
+		  password: '',
+		  isLogged: false
 		};
 	}
-	onPressLearnMore() {
+	
+		
+	onPressLogin = () => {
+		 var params = {
+            username: this.state.username,
+            password: this.state.password,
+        };
+
+		  
+		  fetch('http://192.168.56.1:80/api/login', {
+			  method: 'POST',
+			  headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			  },
+			  body: JSON.stringify({
+				username: params.username,
+				password: params.password,
+			  }),
+			}) .then((response) => response.json())
+			.then((responseJson) => {
+				alert(responseJson.token);
+				let _storeData = async () => {
+					await AsyncStorage.setItem('USER_TOKEN_', responseJson.token);
+				}
+				
+				AsyncStorage.setItem('USER_TOKEN_', JSON.stringify(responseJson.token), () => {
+					AsyncStorage.getItem('USER_TOKEN_', (err, result) => {
+					  alert(result);
+				  });
+				});
+				
+			})
+			 .catch((error) => {
+			  console.error(error);
+			});
+		
 	 }
 	render(){
 		return (
@@ -21,18 +62,19 @@ export class LoginScreen extends Component{
 				<Text style={styles.UserText}>{this.state.UserText}</Text>
 				<TextInput
 					style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-					onChangeText={(text) => this.setState({text})}
+					onChangeText={(text) => this.setState({username: text})}
 				/>
 				<Text style={styles.PasswordText}>{this.state.PasswordText}</Text>
 				<TextInput secureTextEntry={true}
 					style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-					onChangeText={(text) => this.setState({text})}
+					onChangeText={(text) => this.setState({password: text})}
 				/>
 				<Button
-				  onPress={this.onPressLearnMore}
+				  onPress={this.onPressLogin}
 				  title="Đăng nhập"
 				  color="#841584"
 				/>
+				
 			</View>
 			
 		);
