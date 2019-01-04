@@ -3,10 +3,11 @@ import{View, Text, StyleSheet} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
 import { Button } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
-import { LoginScreen } from './LoginScreen';
-import { AsyncStorage } from "react-native"
+import { AsyncStorage } from "react-native";
+import { ItemPreview } from "./../components/ItemPreview";
 
-class HomeScreen extends Component{
+
+export class HomeScreen extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -33,12 +34,14 @@ class HomeScreen extends Component{
 				  title="check"
 				  color="#841584"
 				/>
+				
+				<ItemPreview name="Tên Sản phẩm"/>
 			</View>
 			
 		);
 	}
 }
-//export default HomeScreen;
+export default HomeScreen;
 
 const styles = StyleSheet.create({
 	container:{
@@ -68,10 +71,3 @@ const styles = StyleSheet.create({
 	}
 })
 
-const TabNavigator = createBottomTabNavigator({
-  Home: HomeScreen,
-  Settings: LoginScreen,
-});
-
-
-export default createAppContainer(TabNavigator);
