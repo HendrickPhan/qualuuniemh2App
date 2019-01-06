@@ -8,7 +8,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import { createBottomTabNavigator, createMaterialTopTabNavigator, createDrawerNavigator, createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator, createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
 import { LoginScreen } from './src/screens/LoginScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { AsyncStorage } from "react-native"
@@ -27,21 +27,6 @@ const TabNavigator = createBottomTabNavigator({
   Login: LoginScreen,
 });
 
-
-
-const MyDrawerNavigator = createDrawerNavigator({
-  Home: {
-        screen: HomeScreen
-    },  
-	Login: {
-        screen: LoginScreen
-    }
-});
-const TabNavigator2 = createMaterialTopTabNavigator({
-  Home: HomeScreen,
-  Login: MyDrawerNavigator,
-  
-});
-export default createAppContainer(TabNavigator2);
+export default createAppContainer(TabNavigator);
 
 

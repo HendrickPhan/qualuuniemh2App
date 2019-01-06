@@ -1,11 +1,19 @@
 import React, {Component} from "react";
-import{View, Text, StyleSheet} from "react-native";
-import { AppRegistry, TextInput } from 'react-native';
-import { Button } from 'react-native';
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
-import { AsyncStorage } from "react-native";
-import { ItemPreview } from "./../components/ItemPreview";
+import{
+	View, 
+	Text, 
+	ScrollView, 
+	StyleSheet,
+	Button,
+	AsyncStorage,
+	TextInput,
+	AppRegistry,
+	ActivityIndicator
+	} from "react-native";
 
+import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import { ItemPreview } from "./../components/ItemPreview";
+import Config from "./../config"
 
 export class HomeScreen extends Component{
 	constructor(props) {
@@ -14,8 +22,31 @@ export class HomeScreen extends Component{
 		  titleText: "Trang chủ",
 		  UserText: 'Tên đăng nhập',
 		  PasswordText: 'Mật khẩu',
+		  isLoading: true,
+		  mathangs: '',
+		  loaiMatHangs: ''
 		};
 	}
+	componentDidMount(){
+		let url = Config.SERVER_URL + "/api/home";
+		return fetch(url)
+		.then((response) => response.json())
+		.then((responseJson) => {
+			this.setState({
+			  isLoading: false,
+				loaiMatHangs: responseJson.loaiMatHangs,
+				mathangs: responseJson.mathangs,
+			}, function(){
+			});
+			
+		})
+		.catch((error) =>{
+			console.error(error);
+		});
+	}
+	
+	
+	
 	
 	onPressCheck = () => {
 		AsyncStorage.getItem('USER_TOKEN_', (err, result) => {
@@ -25,8 +56,16 @@ export class HomeScreen extends Component{
 	onPressLearnMore() {
 	}
 	render(){
+		if(this.state.isLoading){
+		  return(
+			<View style={{flex: 1, padding: 20}}>
+			  <ActivityIndicator/>
+			</View>
+		  )
+		}
+		
 		return (
-			<View style={styles.container}>
+			<ScrollView contentContainerStyle={styles.container}>
 				<Text style ={styles.titleText}>{this.state.titleText}</Text>
 				
 				<Button
@@ -34,9 +73,18 @@ export class HomeScreen extends Component{
 				  title="check"
 				  color="#841584"
 				/>
-				
-				<ItemPreview name="Tên Sản phẩm"/>
-			</View>
+				{this.state.mathangs.map((mathang, key) => {
+					 return (
+					 	<ItemPreview image={mathang.HinhAnh}
+						ten={mathang.TenMatHang}
+						gia={mathang.Gia}
+						xuatXu={mathang.XuatXu}
+						key={key}
+						/>
+						
+					 );
+				  })}
+			</ScrollView>
 			
 		);
 	}
@@ -45,7 +93,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
 	container:{
-		flex:1,
+		
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
