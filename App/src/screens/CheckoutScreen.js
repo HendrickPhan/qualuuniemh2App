@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import{View, Text, StyleSheet,ScrollView,Button,Picker} from "react-native";
+import{View, StyleSheet,ScrollView,Button,Picker} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import { FormLabel, FormInput, Text,FormValidationMessage} from 'react-native-elements';
 
 export class CheckoutScreen extends Component{
 	constructor(props) {
@@ -37,67 +37,49 @@ export class CheckoutScreen extends Component{
 		return (
 	 <ScrollView contentContainerStyle={styles.contentContainer}>
 			<View style={styles.container}>
-				<Text style ={styles.titleText}>{this.state.titleText}</Text>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<FormLabel style ={styles.UserText}>Name</FormLabel>
-					<Text style={styles.UserText}>{this.state.UserText}</Text>
-					</View>
-					<View style={{flex: 2}}>
+				<Text h1>{this.state.titleText}</Text>
+				
+					<FormLabel style ={styles.UserText}>{this.state.UserText}</FormLabel>
+					
 					<TextInput
-						style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
+						placeholder={this.state.UserText}
+						style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1}}
 						onChangeText={(text) => this.setState({text})}
 					/>
-					</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.PhoneText}>{this.state.PhoneText}</Text>
-					</View>
-					<View style={{flex: 2}}>
+					
+					<FormLabel style ={styles.UserText}>{this.state.PhoneText}</FormLabel>
 						<TextInput 
+							placeholder={this.state.PhoneText}
 						   style={styles.textInput}
 						   keyboardType='numeric'
 						   value={this.state.myNumber}
 						   maxLength={10}  //setting limit of input
+						   style={{height: 40,width: 200,borderColor: 'gray', borderWidth: 1}}
 						/>
-					</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.UserText}>{this.state.EmailText}</Text>
-					</View>
-					<View style={{flex: 2}}>
+					
+					<FormLabel style ={styles.UserText}>{this.state.EmailText}</FormLabel>
 						<TextInput
-						  placeholder="Email ID"
+							placeholder={this.state.EmailText}
 						  onChangeText={(text) => this.validate(text)}
 						  keyboardType='email-address'
 						  value={this.state.email}
+						  style={{height: 40,width: 200,borderColor: 'gray', borderWidth: 1}}
 						/>
-					</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.UserText}>{this.state.AddressText}</Text>
-					</View>
-					<View style={{flex: 2}}>
+					
+					<FormLabel style ={styles.UserText}>{this.state.AddressText}</FormLabel>
 					<TextInput
+						placeholder={this.state.AddressText}
+						style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1}}
+						onChangeText={(text) => this.setState({text})}
+					/>
+					
+					<FormLabel style ={styles.UserText}>{this.state.DateText}</FormLabel>
+					<TextInput
+						placeholder={this.state.DateText}
 						style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
 						onChangeText={(text) => this.setState({text})}
 					/>
-					</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.UserText}>{this.state.DateText}</Text>
-					</View>
-					<View style={{flex: 2}}>
-					<TextInput
-						style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-						onChangeText={(text) => this.setState({text})}
-					/>
-					</View>
-				</View>
+				
 				<View  style={{flexDirection: 'row'}}>
 					<View style={{marginRight:10}}>
 						<Button style={{width:50}}
@@ -120,7 +102,7 @@ export class CheckoutScreen extends Component{
 		);
 	}
 }
-export default LoginScreen;
+export default CheckoutScreen;
 
 const styles = StyleSheet.create({
 	container:{
