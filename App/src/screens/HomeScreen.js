@@ -8,11 +8,13 @@ import{
 	AsyncStorage,
 	TextInput,
 	AppRegistry,
+	Image,
 	ActivityIndicator
 	} from "react-native";
 
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import { ItemPreview } from "./../components/ItemPreview";
+import { ItemTypePreview } from "./../components/ItemTypePreview";
 import Config from "./../config"
 
 export class HomeScreen extends Component{
@@ -46,15 +48,7 @@ export class HomeScreen extends Component{
 	}
 	
 	
-	
-	
-	onPressCheck = () => {
-		AsyncStorage.getItem('USER_TOKEN_', (err, result) => {
-					  alert(result);
-				  });
-	}
-	onPressLearnMore() {
-	}
+
 	render(){
 		if(this.state.isLoading){
 		  return(
@@ -66,24 +60,60 @@ export class HomeScreen extends Component{
 		
 		return (
 			<ScrollView contentContainerStyle={styles.container}>
-				<Text style ={styles.titleText}>{this.state.titleText}</Text>
+		
 				
-				<Button
-				  onPress={this.onPressCheck}
-				  title="check"
-				  color="#841584"
+				
+				<Image
+				style={styles.headerBG}
+				source={{uri: Config.SERVER_URL + "/upload/hp_big_img.jpg"}}
 				/>
+				
+				<Text style={styles.titleText}>Loại mặt hàng: </Text>
+				<View style={styles.loaiMatHangContainer}>
+				{this.state.loaiMatHangs.map((loaiMatHangs, key) => {
+					if(key <3){
+					 return (
+						<ItemTypePreview 
+						image={loaiMatHangs.hinhAnh}
+						ten={loaiMatHangs.TenLoaiMatHang}
+						key={key}
+						id={loaiMatHangs.id}
+						/>
+					 );
+					}
+				})}
+				</View>
+				<View  style={styles.loaiMatHangContainer}>
+				{this.state.loaiMatHangs.map((loaiMatHangs, key) => {
+					if(key >=3){
+					 return (
+						<ItemTypePreview 
+						image={loaiMatHangs.hinhAnh}
+						ten={loaiMatHangs.TenLoaiMatHang}
+						key={key}
+						id={loaiMatHangs.id}
+						/>
+					 );
+					}
+				})}
+				</View>
+				
+				
+				<Text style={styles.titleText}>Mặt hàng tiêu biểu: </Text>
 				{this.state.mathangs.map((mathang, key) => {
 					 return (
+					
 					 	<ItemPreview image={mathang.HinhAnh}
 						ten={mathang.TenMatHang}
 						gia={mathang.Gia}
 						xuatXu={mathang.XuatXu}
 						key={key}
+						id={mathang.id}
 						/>
-						
+					
 					 );
 				  })}
+			
 			</ScrollView>
 			
 		);
@@ -94,14 +124,25 @@ export default HomeScreen;
 const styles = StyleSheet.create({
 	container:{
 		
-		alignItems: 'center',
+		alignItems: 'flex-start',
 		justifyContent: 'center'
 	},
+	headerBG:{
+		width: '100%' ,
+		height: 200,
+		marginBottom: 20
+		
+	},
+	loaiMatHangContainer:{
+		flexDirection: 'row',
+		width: '100%',
+		justifyContent: 'space-between',
+		marginBottom: 10
+	},
 	titleText: {
-		fontSize: 40,
+		fontSize: 20,
 		fontWeight: 'bold',
-		color: 'red',
-		marginBottom:10,
+		margin:10,
 	},
 	PasswordText: {
 		fontSize: 20,
