@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import{View, StyleSheet,ScrollView,Button,Picker,Image} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
-import { Navigation } from 'react-native-navigation';
-import { FormLabel, FormInput, Text,FormValidationMessage,Tile} from 'react-native-elements'
+
 export class ThankyouScreen extends Component{
 	constructor(props) {
 		super(props);
@@ -51,4 +50,3 @@ const styles = StyleSheet.create({
 	  color:'white'
   }
 })
-AppRegistry.registerComponent('AwesomeProject', () => ThankyouScreen);

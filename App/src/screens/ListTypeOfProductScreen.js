@@ -2,17 +2,58 @@ import React, {Component} from "react";
 import{View, Text, StyleSheet} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
 import { Button } from 'react-native';
+import { AsyncStorage } from "react-native"
+import Config from "./../config"
 
-export class LoginScreen extends Component{
+export class ListTypeOfProductScreen extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
 		  titleText: "Đăng nhập",
 		  UserText: 'Tên đăng nhập',
 		  PasswordText: 'Mật khẩu',
+		  userName: '',
+		  password: '',
+		  isLogged: false
 		};
 	}
-	onPressLearnMore() {
+	
+		
+	onPressLogin = () => {
+		 var params = {
+            username: this.state.username,
+            password: this.state.password,
+        };
+
+		  let url = Config.SERVER_URL + "/api/login";
+		  fetch(url, {
+			  method: 'POST',
+			  headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			  },
+			  body: JSON.stringify({
+				username: params.username,
+				password: params.password,
+			  }),
+			}) .then((response) => response.json())
+			.then((responseJson) => {
+				alert(responseJson.token);
+				let _storeData = async () => {
+					await AsyncStorage.setItem('USER_TOKEN_', responseJson.token);
+				}
+				
+				AsyncStorage.setItem('USER_TOKEN_', JSON.stringify(responseJson.token), () => {
+					AsyncStorage.getItem('USER_TOKEN_', (err, result) => {
+					  alert(result);
+				  });
+				});
+				
+			})
+			 .catch((error) => {
+			  console.error(error);
+			});
+		
 	 }
 	render(){
 		return (
@@ -21,24 +62,25 @@ export class LoginScreen extends Component{
 				<Text style={styles.UserText}>{this.state.UserText}</Text>
 				<TextInput
 					style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-					onChangeText={(text) => this.setState({text})}
+					onChangeText={(text) => this.setState({username: text})}
 				/>
 				<Text style={styles.PasswordText}>{this.state.PasswordText}</Text>
 				<TextInput secureTextEntry={true}
 					style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-					onChangeText={(text) => this.setState({text})}
+					onChangeText={(text) => this.setState({password: text})}
 				/>
 				<Button
-				  onPress={this.onPressLearnMore}
+				  onPress={this.onPressLogin}
 				  title="Đăng nhập"
 				  color="#841584"
 				/>
+				
 			</View>
 			
 		);
 	}
 }
-export default LoginScreen;
+export default ListTypeOfProductScreen;
 
 const styles = StyleSheet.create({
 	container:{
@@ -67,4 +109,3 @@ const styles = StyleSheet.create({
 		marginBottom:10,
 	}
 })
-AppRegistry.registerComponent('AwesomeProject', () => LoginScreen);

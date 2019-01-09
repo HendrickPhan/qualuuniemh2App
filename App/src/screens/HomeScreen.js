@@ -9,15 +9,22 @@ import{
 	TextInput,
 	AppRegistry,
 	Image,
-	ActivityIndicator
+	ActivityIndicator,
+	TouchableOpacity
 	} from "react-native";
 
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import { ItemPreview } from "./../components/ItemPreview";
 import { ItemTypePreview } from "./../components/ItemTypePreview";
 import Config from "./../config"
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+
 
 export class HomeScreen extends Component{
+	onPressLoaiMatHang = (id) => {
+		this.props.navigation.navigate('ListProduct',{id: id})
+	}
+	
+	
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -73,12 +80,14 @@ export class HomeScreen extends Component{
 				{this.state.loaiMatHangs.map((loaiMatHangs, key) => {
 					if(key <3){
 					 return (
-						<ItemTypePreview 
-						image={loaiMatHangs.hinhAnh}
-						ten={loaiMatHangs.TenLoaiMatHang}
-						key={key}
-						id={loaiMatHangs.id}
-						/>
+						 <TouchableOpacity onPress={() => this.onPressLoaiMatHang(loaiMatHangs.id)}>
+							<ItemTypePreview 
+							image={loaiMatHangs.hinhAnh}
+							ten={loaiMatHangs.TenLoaiMatHang}
+							key={key}
+							id={loaiMatHangs.id}
+							/>
+						  </TouchableOpacity>
 					 );
 					}
 				})}
@@ -87,12 +96,14 @@ export class HomeScreen extends Component{
 				{this.state.loaiMatHangs.map((loaiMatHangs, key) => {
 					if(key >=3){
 					 return (
-						<ItemTypePreview 
-						image={loaiMatHangs.hinhAnh}
-						ten={loaiMatHangs.TenLoaiMatHang}
-						key={key}
-						id={loaiMatHangs.id}
-						/>
+						 <TouchableOpacity onPress={() => this.onPressLoaiMatHang(loaiMatHangs.id)}>
+							<ItemTypePreview 
+							image={loaiMatHangs.hinhAnh}
+							ten={loaiMatHangs.TenLoaiMatHang}
+							key={key}
+							id={loaiMatHangs.id}
+							/>
+						 </TouchableOpacity>
 					 );
 					}
 				})}

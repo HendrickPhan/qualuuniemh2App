@@ -5,7 +5,7 @@ import { Button } from 'react-native';
 import { AsyncStorage } from "react-native"
 import Config from "./../config"
 
-export class LoginScreen extends Component{
+export class SingleProductScreen extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -80,7 +80,7 @@ export class LoginScreen extends Component{
 		);
 	}
 }
-export default LoginScreen;
+export default SingleProductScreen;
 
 const styles = StyleSheet.create({
 	container:{
@@ -109,4 +109,3 @@ const styles = StyleSheet.create({
 		marginBottom:10,
 	}
 })
-AppRegistry.registerComponent('AwesomeProject', () => LoginScreen);

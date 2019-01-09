@@ -1,12 +1,10 @@
-
-
-import { LoginScreen } from './src/screens/LoginScreen';
-import { RegisterScreen } from './src/screens/RegisterScreen';
-import { HomeScreen } from './src/screens/HomeScreen';
-import { ThankyouScreen } from './src/screens/ThankyouScreen';
-import { ListProductScreen } from './src/screens/ListProductScreen';
-import { ListTypeOfProductScreen } from './src/screens/ListTypeOfProductScreen';
-import { CartScreen } from './src/screens/CartScreen';
+import { LoginScreen } from './../screens/LoginScreen';
+import { RegisterScreen } from './../screens/RegisterScreen';
+import { HomeScreen } from './../screens/HomeScreen';
+import { ThankyouScreen } from './../screens/ThankyouScreen';
+import { ListProductScreen } from './../screens/ListProductScreen';
+import { ListTypeOfProductScreen } from './../screens/ListTypeOfProductScreen';
+import { CartScreen } from './../screens/CartScreen';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from "react-navigation";
 
 
@@ -18,7 +16,7 @@ const AppTabNavigator = createBottomTabNavigator({
 });
 
 
-const App = createStackNavigator({
+const Routes = createStackNavigator({
   Home: {
     screen: HomeScreen
   },
@@ -41,6 +39,5 @@ const App = createStackNavigator({
    initialRouteName: "Tabs"
 });
 
-export default createAppContainer(App);
-
+export default createAppContainer(Routes);
 

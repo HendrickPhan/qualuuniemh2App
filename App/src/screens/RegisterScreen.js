@@ -1,9 +1,8 @@
 import React, {Component} from "react";
 import{View, StyleSheet,ScrollView,Picker} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
-import { Navigation } from 'react-native-navigation';
-import { FormLabel, Text,FormInput, FormValidationMessage,Button } from 'react-native-elements'
-export class LoginScreen extends Component{
+
+export class RegisterScreen extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -142,7 +141,7 @@ export class LoginScreen extends Component{
 		);
 	}
 }
-export default LoginScreen;
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
 	container:{
@@ -151,4 +150,4 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	}
 })
-AppRegistry.registerComponent('AwesomeProject', () => LoginScreen);
+

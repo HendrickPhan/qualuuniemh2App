@@ -1,112 +1,78 @@
 import React, {Component} from "react";
-import{View, Text, StyleSheet} from "react-native";
+import{View, Text, StyleSheet,ActivityIndicator, ScrollView} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
 import { Button } from 'react-native';
 import { AsyncStorage } from "react-native"
 import Config from "./../config"
 
-export class LoginScreen extends Component{
+import { ItemPreview } from "./../components/ItemPreview";
+export class ListProductScreen extends Component{
 	constructor(props) {
+		// lay tham so duoc truyen
+			
 		super(props);
 		this.state = {
-		  titleText: "Đăng nhập",
-		  UserText: 'Tên đăng nhập',
-		  PasswordText: 'Mật khẩu',
-		  userName: '',
-		  password: '',
-		  isLogged: false
+			isLoading: true,
+			mathangs: '',
 		};
+	}
+	componentDidMount(){
+		const { navigation } = this.props;
+		const id = navigation.getParam('id', '-1');
+		
+		let url = Config.SERVER_URL + "/api/listMatHang/" + id;
+		return fetch(url)
+		.then((response) => response.json())
+		.then((responseJson) => {
+			this.setState({
+				isLoading: false,
+				mathangs: responseJson,
+			}, function(){
+			});
+			
+		})
+		.catch((error) =>{
+			console.error(error);
+		});
 	}
 	
 		
-	onPressLogin = () => {
-		 var params = {
-            username: this.state.username,
-            password: this.state.password,
-        };
-
-		  let url = Config.SERVER_URL + "/api/login";
-		  fetch(url, {
-			  method: 'POST',
-			  headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			  },
-			  body: JSON.stringify({
-				username: params.username,
-				password: params.password,
-			  }),
-			}) .then((response) => response.json())
-			.then((responseJson) => {
-				alert(responseJson.token);
-				let _storeData = async () => {
-					await AsyncStorage.setItem('USER_TOKEN_', responseJson.token);
-				}
-				
-				AsyncStorage.setItem('USER_TOKEN_', JSON.stringify(responseJson.token), () => {
-					AsyncStorage.getItem('USER_TOKEN_', (err, result) => {
-					  alert(result);
-				  });
-				});
-				
-			})
-			 .catch((error) => {
-			  console.error(error);
-			});
-		
-	 }
+	
 	render(){
-		return (
-			<View style={styles.container}>
-				<Text style ={styles.titleText}>{this.state.titleText}</Text>
-				<Text style={styles.UserText}>{this.state.UserText}</Text>
-				<TextInput
-					style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-					onChangeText={(text) => this.setState({username: text})}
-				/>
-				<Text style={styles.PasswordText}>{this.state.PasswordText}</Text>
-				<TextInput secureTextEntry={true}
-					style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-					onChangeText={(text) => this.setState({password: text})}
-				/>
-				<Button
-				  onPress={this.onPressLogin}
-				  title="Đăng nhập"
-				  color="#841584"
-				/>
-				
+		if(this.state.isLoading){
+		  return(
+			<View style={{flex: 1, padding: 20}}>
+			  <ActivityIndicator/>
 			</View>
+		  )
+		}
+		return (
+			<ScrollView contentContainerStyle={styles.container}>
+				{this.state.mathangs.map((mathang, key) => {
+					 return (
+					
+					 	<ItemPreview image={mathang.HinhAnh}
+						ten={mathang.TenMatHang}
+						gia={mathang.Gia}
+						xuatXu={mathang.XuatXu}
+						key={key}
+						id={mathang.id}
+						/>
+					
+					 );
+				  })}
+			</ScrollView>
 			
 		);
 	}
 }
-export default LoginScreen;
 
 const styles = StyleSheet.create({
 	container:{
-		flex:1,
-		alignItems: 'center',
+		
+		alignItems: 'flex-start',
 		justifyContent: 'center'
-	},
-	titleText: {
-		fontSize: 40,
-		fontWeight: 'bold',
-		color: 'red',
-		marginBottom:10,
-	},
-	PasswordText: {
-		fontSize: 20,
-		fontWeight: 'bold',
-		alignSelf: 'stretch',
-		marginLeft:110,
-		marginBottom:10,
-	},
-	UserText: {
-		fontSize: 20,
-		fontWeight: 'bold',
-		alignSelf: 'stretch',
-		marginLeft:110,
-		marginBottom:10,
 	}
 })
-AppRegistry.registerComponent('AwesomeProject', () => LoginScreen);
+export default ListProductScreen;
+

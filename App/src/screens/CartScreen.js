@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import{View, Text, StyleSheet,ScrollView,Button,Picker} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
-import { Navigation } from 'react-native-navigation';
-export class RegisterScreen extends Component{
+
+export class CartScreen extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -169,7 +169,7 @@ export class RegisterScreen extends Component{
 		);
 	}
 }
-export default LoginScreen;
+export default CartScreen;
 
 const styles = StyleSheet.create({
 	container:{
@@ -200,4 +200,3 @@ const styles = StyleSheet.create({
 		paddingLeft:5,
 	}
 })
-AppRegistry.registerComponent('AwesomeProject', () => LoginScreen);

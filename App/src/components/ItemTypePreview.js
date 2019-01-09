@@ -9,6 +9,7 @@ import {ScrollView,
 } from 'react-native';
 
 
+
 import Config from "./../config"
 
 export class ItemTypePreview extends Component {	
@@ -21,20 +22,20 @@ export class ItemTypePreview extends Component {
     return (
 	
 		<View>
-			<TouchableOpacity onPress={() => this.onPressLoaiMatHang(this.props.id)}>
+			
 				  <ImageBackground source={{uri: url}} style={{width: 100, height: 100}}>
 					<View style={{position: 'absolute', width:'100%', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
 					 <Text style={styles.textStyle}>{this.props.ten}</Text>
 					</View>
 				  </ImageBackground>
-			  </TouchableOpacity>
+			
 		</View>	
 	
     );
   }
 }
 
-export default ItemTypePreview;
+
 
 const styles = StyleSheet.create({
 	textStyle : {		
@@ -45,3 +46,6 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold'
 	}
 })
+
+
+export default ItemTypePreview;

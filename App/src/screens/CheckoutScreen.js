@@ -1,8 +1,6 @@
 import React, {Component} from "react";
 import{View, StyleSheet,ScrollView,Button,Picker} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
-import { Navigation } from 'react-native-navigation';
-import { FormLabel, FormInput, Text,FormValidationMessage} from 'react-native-elements';
 
 export class CheckoutScreen extends Component{
 	constructor(props) {
