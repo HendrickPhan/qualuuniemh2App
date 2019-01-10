@@ -1,11 +1,20 @@
 import React, {Component} from "react";
-import{View, Text, StyleSheet,ActivityIndicator, ScrollView} from "react-native";
+import{
+	View, 
+	Text, 
+	StyleSheet,
+	ActivityIndicator, 
+	ScrollView,
+	TouchableOpacity,
+	ListView, 
+	FlatList
+} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
 import { Button } from 'react-native';
 import { AsyncStorage } from "react-native"
 import Config from "./../config"
-
 import { ItemPreview } from "./../components/ItemPreview";
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 export class ListProductScreen extends Component{
 	constructor(props) {
 		// lay tham so duoc truyen
@@ -13,9 +22,14 @@ export class ListProductScreen extends Component{
 		super(props);
 		this.state = {
 			isLoading: true,
-			mathangs: '',
+			mathangs: [],
 		};
 	}
+	
+	onPressMatHang = (id) => {
+		this.props.navigation.navigate('SingleProduct',{id: id})
+	}
+	
 	componentDidMount(){
 		const { navigation } = this.props;
 		const id = navigation.getParam('id', '-1');
@@ -26,7 +40,7 @@ export class ListProductScreen extends Component{
 		.then((responseJson) => {
 			this.setState({
 				isLoading: false,
-				mathangs: responseJson,
+				mathangs: responseJson.mathang,
 			}, function(){
 			});
 			
@@ -36,7 +50,18 @@ export class ListProductScreen extends Component{
 		});
 	}
 	
-		
+	renderItem = ({item}) =>{
+		return(
+			<TouchableOpacity onPress={() => this.onPressMatHang(item.id)}>
+				<ItemPreview image={item.HinhAnh}
+				ten={item.TenMatHang}
+				gia={item.Gia}
+				xuatXu={item.XuatXu}
+				id={item.id}
+				/>
+			</TouchableOpacity>
+		)
+	}	
 	
 	render(){
 		if(this.state.isLoading){
@@ -47,21 +72,13 @@ export class ListProductScreen extends Component{
 		  )
 		}
 		return (
-			<ScrollView contentContainerStyle={styles.container}>
-				{this.state.mathangs.map((mathang, key) => {
-					 return (
-					
-					 	<ItemPreview image={mathang.HinhAnh}
-						ten={mathang.TenMatHang}
-						gia={mathang.Gia}
-						xuatXu={mathang.XuatXu}
-						key={key}
-						id={mathang.id}
-						/>
-					
-					 );
-				  })}
-			</ScrollView>
+			<View style={styles.container}>
+				<FlatList 
+					data={this.state.mathangs}
+					renderItem={this.renderItem}
+				/>
+			</View>
+		
 			
 		);
 	}
@@ -69,7 +86,7 @@ export class ListProductScreen extends Component{
 
 const styles = StyleSheet.create({
 	container:{
-		
+		marginTop: 10,
 		alignItems: 'flex-start',
 		justifyContent: 'center'
 	}

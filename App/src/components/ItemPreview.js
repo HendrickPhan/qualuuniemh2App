@@ -18,7 +18,7 @@ export class ItemPreview extends Component {
 		<View>
 			<Text style={{marginBottom: 10, fontSize: 20, fontWeight: 'bold'}}>{this.props.ten}</Text>
 			<Text style={{marginBottom: 10}}>Giá: {this.props.gia} VNĐ</Text>
-			<Text style={{}}>Xuất xứ:{this.props.xuatXu} </Text>
+			<Text style={{}}>Xuất xứ: {this.props.xuatXu} </Text>
 		</View>
 		
       </View>

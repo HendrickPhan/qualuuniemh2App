@@ -20,6 +20,10 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 
 export class HomeScreen extends Component{
+	static navigationOptions = {
+		tabBarLabel: 'Home!',
+	  };
+	
 	onPressLoaiMatHang = (id) => {
 		this.props.navigation.navigate('ListProduct',{id: id})
 	}
@@ -54,8 +58,8 @@ export class HomeScreen extends Component{
 		});
 	}
 	
-	
 
+	
 	render(){
 		if(this.state.isLoading){
 		  return(

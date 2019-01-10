@@ -8,7 +8,7 @@ import {ScrollView,
 		TouchableOpacity
 } from 'react-native';
 
-
+import { createBottomTabNavigator, createStackNavigator, createAppContainer } from "react-navigation";
 
 import Config from "./../config"
 
