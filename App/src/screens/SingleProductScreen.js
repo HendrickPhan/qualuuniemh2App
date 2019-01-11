@@ -1,39 +1,50 @@
 import React, {Component} from "react";
-import{View, Text, StyleSheet, ScrollView, ActivityIndicator, Button,TouchableOpacity } from "react-native";
-import { AppRegistry, TextInput } from 'react-native';
-
-import { AsyncStorage } from "react-native"
+import{View, 
+	Alert,
+	Text, 
+	StyleSheet, 
+	ScrollView, 
+	ActivityIndicator,
+	Button,
+	TouchableOpacity,
+	AppRegistry, 
+	TextInput, 
+	AsyncStorage 
+} from "react-native";
 import Config from "./../config"
 import ImageSlider from 'react-native-image-slider';
-
-
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export class SingleProductScreen extends Component{
 	
 	static navigationOptions =({navigation}) =>( {
-    headerTitle: "Mặt hàng",
-    headerRight: (
-	<TouchableOpacity onPress={() =>{navigation.navigate('Cart')}} >
-			<Icon name="shopping-cart" size={25} color="#000" style={{marginRight: 10}}/>
-	</TouchableOpacity>
-	  
-    ),
-  });
-
-	
-	
-	
+		headerTitle: "Mặt hàng",
+		headerRight: (
+		<TouchableOpacity onPress={() =>{navigation.navigate('Cart')}} >
+				<Icon name="shopping-cart" size={25} color="#000" style={{marginRight: 10}}/>
+		</TouchableOpacity>
+		  
+		),
+	});
 	constructor(props) {
 		super(props);
 		this.state = {
 			data: '',
 			images: '',
-			isLoading: true
+			isLoading: true,
+			userId: -1,
+			cart: ''
 		};
 	}
 	componentDidMount(){
+		AsyncStorage.getItem('USER_ID', (err, result)=> {
+			if(JSON.parse(result) != null){
+				this.setState({user_id: JSON.parse(result)});
+			}	
+		});
+		
+		
 		const { navigation } = this.props;
 		const id = navigation.getParam('id', '-1');
 		
@@ -54,8 +65,30 @@ export class SingleProductScreen extends Component{
 			console.error(error);
 		});
 	}
-	onPressMua = (id) => {
-		alert(id);
+	onPressMua = (matHang) => {
+		/*AsyncStorage.clear();*/
+
+		AsyncStorage.getItem('Cart', (err, result) => {
+			let cart = JSON.parse(result);
+			cart = cart == null ? [] : cart;
+			let item = {
+				userId: this.state.userId,
+				id: matHang.id,
+				tenMatHang: matHang.TenMatHang,
+				gia: matHang.Gia,
+				image: Config.SERVER_URL + this.state.images[0].url
+			};
+			cart.push(item);
+			AsyncStorage.setItem('Cart', JSON.stringify(cart));
+			
+			Alert.alert('Thông báo','Thêm mặt hàng thành công',
+				[
+					{text: 'OK'},
+				],
+			);
+		});
+		
+		
 	}
 	
 	
@@ -94,10 +127,9 @@ export class SingleProductScreen extends Component{
 				
 					<View style={{width: '50%', alignSelf: 'center', marginTop: 20,marginBottom: 20 }}>
 						<Button
-						  onPress={() => this.onPressMua(this.state.data.id)}
+						  onPress={() => this.onPressMua(this.state.data)}
 						  title="Thêm vào giỏ"
 						  color="#ffab23"
-						  accessibilityLabel="Learn more about this purple button"
 						/>
 					</View>
 				</ScrollView>

@@ -1,202 +1,139 @@
 import React, {Component} from "react";
-import{View, Text, StyleSheet,ScrollView,Button,Picker} from "react-native";
+import{
+	View, 
+	Text, 
+	StyleSheet,
+	ScrollView,
+	Button,
+	AsyncStorage,
+	ActivityIndicator,
+	FlatList,
+	TouchableOpacity,
+	Image
+} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { NavigationEvents } from "react-navigation";
 
 export class CartScreen extends Component{
+	
 	constructor(props) {
 		super(props);
 		this.state = {
-		  titleText: "Đăng ký",
-		  UserText: 'Tên tài khoản',
-		  PasswordText: 'Mật khẩu',
-		  RePasswordText: 'Nhập mật khẩu',
-		  UserNameText: 'Họ và tên',
-		  DoBText:'Ngày sinh',
-		  SexText:'Giới tính',
-		  PhoneText:'Số điện thoại',
-		  EmailText:'Email',
-		  AddressText:'Địa chỉ',
-		  TownText:'Thành phố',
-		  TownshipText:'Quận',
+			uniqueNumber: 1,
+			isLoading: true,
+			userId: -1,
+			cart: [],
+			tongTien: 0
 		}
 	};
-	
-		validate = (text) => {
-			console.log(text);
-			let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
-			if(reg.test(text) === false)
-			{
-			console.log("Email is Not Correct");
-			this.setState({email:text})
-			return false;
-			  }
-			else {
-			  this.setState({email:text})
-			  console.log("Email is Correct");
-			}
+	componentDidMount(){
+		AsyncStorage.getItem('USER_ID', (err, result)=> {
+			if(JSON.parse(result) != null){
+				this.setState({user_id: JSON.parse(result)});
+			}	
+		});
+		this.refetch();
+		this.setState({
+			isLoading: false
+		});
+	}
+	tinhTongTien(){
+		let tong = 0;
+		for (i = 0; i < this.state.cart.length; i++) {
+		  tong+= this.state.cart[i].gia;
 		}
-	onPressLearnMore() {
-	 }
-	render(){
-		return (
-	 <ScrollView contentContainerStyle={styles.contentContainer}>
-			<View style={styles.container}>
-				<Text style ={styles.titleText}>{this.state.titleText}</Text>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.UserText}>{this.state.UserText}</Text>
-					</View>
-					<View style={{flex: 2}}>
-					<TextInput
-						style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-						onChangeText={(text) => this.setState({text})}
-					/>
-					</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.UserText}>{this.state.PasswordText}</Text>
-					</View>
-					<View style={{flex: 2}}>
-					<TextInput secureTextEntry={true}
-						style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-						onChangeText={(text) => this.setState({text})}
-					/>
-					</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.UserText}>{this.state.RePasswordText}</Text>
-					</View>
-					<View style={{flex: 2}}>
-					<TextInput secureTextEntry={true}
-						style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-						onChangeText={(text) => this.setState({text})}
-					/>
-					</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.UserText}>{this.state.DoBText}</Text>
-					</View>
-					<View style={{flex: 2}}>
-					<TextInput
-						style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-						onChangeText={(text) => this.setState({text})}
-					/>
-					</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.UserText}>{this.state.SexText}</Text>
-					</View>
-					<View style={{flex: 2}}>
-					<Picker
-					  selectedValue={this.state.language}
-					  style={{ height: 30, width: 100 }}
-					  onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
-					  <Picker.Item label="Male" value="Male" />
-					  <Picker.Item label="Female" value="Female" />
-					</Picker>
-					</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.PhoneText}>{this.state.PhoneText}</Text>
-					</View>
-					<View style={{flex: 2}}>
-						<TextInput 
-						   style={styles.textInput}
-						   keyboardType='numeric'
-						   value={this.state.myNumber}
-						   maxLength={10}  //setting limit of input
-						/>
-					</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.UserText}>{this.state.EmailText}</Text>
-					</View>
-					<View style={{flex: 2}}>
-						<TextInput
-						  placeholder="Email ID"
-						  onChangeText={(text) => this.validate(text)}
-						  keyboardType='email-address'
-						  value={this.state.email}
-						/>
-					</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.UserText}>{this.state.AddressText}</Text>
-					</View>
-					<View style={{flex: 2}}>
-					<TextInput
-						style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-						onChangeText={(text) => this.setState({text})}
-					/>
-					</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.UserText}>{this.state.TownText}</Text>
-					</View>
-					<View style={{flex: 2}}>
-					<TextInput
-						style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-						onChangeText={(text) => this.setState({text})}
-					/>
-				</View>
-				</View>
-				<View  style={{flex: 1, flexDirection: 'row'}}>
-					<View style={{flex: 1}}>
-					<Text style={styles.UserText}>{this.state.TownshipText}</Text>
-					</View>
-					<View style={{flex: 2}}>
-					<TextInput secureTextEntry={true}
-						style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-						onChangeText={(text) => this.setState({text})}
-					/>
-					</View>
-				</View>
-				<Button
-				  onPress={this.onPressLearnMore}
-				  title="Đăng ký"
-				  color="#841584"
-				/>
+		this.setState({tongTien: tong})
+	}
+	refetch(){
+		AsyncStorage.getItem('Cart', (err, result)=> {
+			let cartItems = [];
+			if(JSON.parse(result) != null){
+				let items = JSON.parse(result);
+				for(let i=0; i<items.length; i++){
+					if(items[i].userId == this.state.userId){
+						cartItems.push(items[i]);
+					}
+				}
+			}	
+			this.setState({
+				cart: cartItems,
+			});
+			this.tinhTongTien();
+		});
+		
+	}
+	
+	renderItem = ({item, index}) =>{
+		return(
+		<View style={{
+				borderRadius: 4,
+				borderWidth: 0.5,
+				borderColor: '#d6d7da',
+				flexDirection: 'row',
+				padding: 10
+		}}>
+			<Image
+			style={{width: 150, height: 100}}
+			source={{uri: item.image}}
+			/>
+			<View style={{
+				justifyContent: 'space-between',
+				padding: 10
+			}}>
+				<Text>{item.tenMatHang}</Text>
+				<Text>{item.gia} VNĐ</Text>
+				<Text onPress={() =>this.deleteItem(index)}>Xóa</Text>
 			</View>
-			 </ScrollView>
+		
+		</View>
+		
+		
+			
+		)
+	}	
+	
+	deleteItem(index){
+		let _cart = this.state.cart;
+		_cart.splice(index,1);
+		AsyncStorage.setItem('Cart', JSON.stringify(_cart));
+		this.refetch();
+		
+	}	
+	render(){
+		
+		if(this.state.isLoading){
+		  return(
+			<View style={{flex: 1, padding: 20}}>
+			  <ActivityIndicator/>
+			</View>
+		  )
+		}
+		
+		return (
+			<ScrollView>
+				<NavigationEvents
+				  onWillFocus={() => {
+					this.refetch();
+				  }}
+				/>
+				<FlatList 
+					data={this.state.cart}
+					renderItem={this.renderItem}
+				/>
+				<Text>
+				Tổng số tiền: {this.state.tongTien} VNĐ
+				
+				</Text>
+				<View style={{width: '50%', alignSelf: 'center', marginTop: 20,marginBottom: 20 }}>
+					<Button
+					  onPress={() => alert(JSON.stringify(this.state.cart))}
+					  title="Đặt hàng"
+					  color="#ffab23"
+					/>
+				</View>
+			</ScrollView>
 		);
 	}
 }
 export default CartScreen;
-
-const styles = StyleSheet.create({
-	container:{
-		flex:1,
-		alignItems: 'center',
-		justifyContent: 'center'
-	},
-	titleText: {
-		fontSize: 40,
-		fontWeight: 'bold',
-		color: 'red',
-		marginBottom:10,
-	},
-	UserText: {
-		fontSize: 20,
-		fontWeight: 'bold',
-		alignSelf: 'stretch',
-		paddingTop:10,
-		marginBottom:10,
-		paddingLeft:5,
-	},
-	PhoneText:{
-		fontSize: 20,
-		fontWeight: 'bold',
-		alignSelf: 'stretch',
-		paddingTop:10,
-		marginBottom:10,
-		paddingLeft:5,
-	}
-})

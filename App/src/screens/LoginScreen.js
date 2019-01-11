@@ -38,17 +38,8 @@ export class LoginScreen extends Component{
 			  }),
 			}) .then((response) => response.json())
 			.then((responseJson) => {
-				alert(responseJson.token);
-				let _storeData = async () => {
-					await AsyncStorage.setItem('USER_TOKEN_', responseJson.token);
-				}
-				
-				AsyncStorage.setItem('USER_TOKEN_', JSON.stringify(responseJson.token), () => {
-					AsyncStorage.getItem('USER_TOKEN_', (err, result) => {
-					  alert(result);
-				  });
-				});
-				
+				AsyncStorage.setItem('USER_ID', JSON.stringify(responseJson.id));
+				AsyncStorage.setItem('USER_TOKEN_', JSON.stringify(responseJson.token));	
 			})
 			 .catch((error) => {
 			  console.error(error);
