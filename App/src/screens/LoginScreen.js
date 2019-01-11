@@ -66,7 +66,7 @@ export class LoginScreen extends Component{
 						 placeholder={this.state.UserText}
 					/>
 					<TextInput secureTextEntry={true}
-						style={styles.PasswordText}
+						style={styles.UserText}
 						onChangeText={(text) => this.setState({password: text})}
 						placeholder={this.state.PasswordText}
 					/>
@@ -100,27 +100,22 @@ const styles = StyleSheet.create({
 		marginBottom:50,
 		textAlign:'center',
 	},
-	PasswordText: {
-		height: 60,
-		width: 300, 
-		borderColor: 'gray', 
-		borderWidth: 1,
-		marginBottom:10,
-		fontSize:   20,
-		fontWeight: 'bold',
-		alignSelf: 'stretch',
-		marginBottom:10,
-	},
 	UserText: {
 		height: 60,
 		width: 300, 
-		borderColor: 'gray', 
 		borderWidth: 1,
+		borderRadius: 2,
+		borderColor: 'white',
+		borderBottomWidth: 0,
+		shadowColor: 'white',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		elevation: 1,
 		marginBottom:10,
 		fontSize:   20,
 		fontWeight: 'bold',
 		alignSelf: 'stretch',
-		marginBottom:10,
 	},
 	button:{
 		marginTop:50,

@@ -58,105 +58,78 @@ export class RegisterScreen extends Component{
 		return (
 	 <ScrollView contentContainerStyle={styles.contentContainer}>
 			<View style={styles.container}>
-				<Text h1>{this.state.titleText}</Text>		
-					<FormLabel>{this.state.UserText}</FormLabel>
-					
+				<View>
+				<Text style ={styles.titleText}>{this.state.titleText}</Text>	
 					<TextInput
-						placeholder={this.state.UserText}
-						style={{height: 40,width: 200, borderColor: 'gray', borderBottomWidth: 1}}
-						onChangeText={(text) => this.setState({text})}
+						style={styles.UserText}
+						onChangeText={(text) => this.setState({username: text})}
+						 placeholder={this.state.UserText}
 					/>
-				
-			
-					<FormLabel>{this.state.PasswordText}</FormLabel>
-					
-					
 					<TextInput secureTextEntry={true}
-						onChangeText={(text) => this.validate(text,'Password')}
+						style={styles.UserText}
+						onChangeText={(text) => this.setState({password: text})}
 						placeholder={this.state.PasswordText}
-						style={{height: 40,width: 200, borderColor: 'gray', borderBottomWidth: 1}}
-						onChangeText={(text) => this.setState({text})}
 					/>
-					
-					<FormLabel>{this.state.RePasswordText}</FormLabel>
-					
 					<TextInput secureTextEntry={true}
-						onChangeText={(text) => this.validate(text,'RePassword')}
-						
+						style={styles.UserText}
+						onChangeText={(text) => this.setState({password: text})}
 						placeholder={this.state.RePasswordText}
-						style={[styles.inputStyle,!this.state.RePasswordValdate?styles.error:null]}
-						onChangeText={(text) => this.setState({text})}
+						style={[styles.UserText,!this.state.RePasswordValdate?styles.error:null]}
 					/>
-					
-					<FormLabel>{this.state.DoBText}</FormLabel>
-					
 					<TextInput
+						style={styles.UserText}
 						placeholder={this.state.DoBText}
-						style={{height: 40,width: 200, borderColor: 'gray', borderBottomWidth: 1}}
 						onChangeText={(text) => this.setState({text})}
 					/>
-					
-					<FormLabel>{this.state.SexText}</FormLabel>
-					
 					<Picker
 					  selectedValue={this.state.language}
-					  style={{ height: 30, width: 100,borderBottomWidth: 1 }}
+					  style={styles.UserText}
 					  onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
 					  <Picker.Item label="Male" value="Male" />
 					  <Picker.Item label="Female" value="Female" />
 					</Picker>
-					
-					<FormLabel>{this.state.PhoneText}</FormLabel>
-					
-						<TextInput 
-							placeholder={this.state.PhoneText}
-						   style={styles.textInput}
-						   keyboardType='numeric'
-						   value={this.state.myNumber}
-						   maxLength={10}  //setting limit of input
-						   style={{height: 40,width: 200,borderColor: 'gray', borderBottomWidth: 1}}
-						/>
-					
-					<FormLabel>{this.state.EmailText}</FormLabel>
-						<TextInput
-						  placeholder={this.state.EmailText}
-						  onChangeText={(text) => this.validate(text,'EmailText')}
-						  keyboardType='email-address'
-						  value={this.state.email}
-						  style={
-						  [styles.inputStyle,!this.state.EmailValdate?styles.error:null]}
-						/>
-				
-					<FormLabel>{this.state.AddressText}</FormLabel>
-					
+					<TextInput 
+						placeholder={this.state.PhoneText}
+						style={styles.UserText}
+						keyboardType='numeric'
+						value={this.state.myNumber}
+						maxLength={10}  //setting limit of input
+						style={styles.UserText}
+					/>
+					<TextInput
+					  placeholder={this.state.EmailText}
+					  onChangeText={(text) => this.validate(text,'EmailText')}
+					  keyboardType='email-address'
+					  value={this.state.email}
+					  style={
+					  [styles.UserText,!this.state.EmailValdate?styles.error:null]}
+					/>
 					<TextInput
 						placeholder={this.state.AddressText}
-						style={{height: 40,width: 200, borderColor: 'gray', borderBottomWidth: 1}}
+						style={styles.UserText}
 						onChangeText={(text) => this.setState({text})}
-					/>
-					
-					<FormLabel>{this.state.TownText}</FormLabel>
-					
+					/>					
 					<TextInput
 						placeholder={this.state.TownText}
-						style={{height: 40,width: 200, borderColor: 'gray', borderBottomWidth: 1}}
+						style={styles.UserText}
 						onChangeText={(text) => this.setState({text})}
 					/>
-					
-					<FormLabel>{this.state.TownshipText}</FormLabel>
-					
 					<TextInput
 						placeholder={this.state.TownshipText}
-						style={{height: 40,width: 200, borderColor: 'gray', borderBottomWidth: 1}}
+						style={styles.UserText}
 						onChangeText={(text) => this.setState({text})}
 					/>
-					
-				<Button
-				  onPress={this.onPressLearnMore}
-				  title="Đăng ký"
-				  buttonStyle={{height: 40,width: 200,backgroundColor:'#17A2B8',marginTop:20}}
-				/>
-			
+					</View>
+				<View style={styles.button}>	
+					<Button
+					  onPress={this.onPressLearnMore}
+					  textStyle={{
+						fontSize: 25,}}
+					  onPress={this.onPressLogin}
+					  title="Đăng ký"
+					  backgroundColor="#17A2B8"		
+					/>
+				</View>
 			</View>
 			 </ScrollView>
 		);
@@ -179,6 +152,38 @@ const styles = StyleSheet.create({
 		width: 200,
 		borderColor: 'gray', 
 		borderBottomWidth: 1,
+	},
+	titleText: {
+		fontSize: 40,
+		fontWeight: 'bold',
+		color: '#17A2B8',
+		marginTop:10,
+		marginBottom:40,
+		textAlign:'center',
+	},
+	UserText: {
+		height: 60,
+		width: 300, 
+		borderWidth: 1,
+		borderRadius: 2,
+		borderColor: 'white',
+		borderBottomWidth: 0,
+		shadowColor: 'white',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		elevation: 1,
+		fontSize:   20,
+		fontWeight: 'bold',
+		alignSelf: 'stretch',
+		marginBottom:20,
+	},
+	button:{
+		marginTop:50,
+		marginBottom:50,
+		height: 60,
+		width: 330,	
 	}
+
 	
 })
