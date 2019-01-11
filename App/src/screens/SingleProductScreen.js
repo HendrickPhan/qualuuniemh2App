@@ -5,12 +5,12 @@ import{View,
 	StyleSheet, 
 	ScrollView, 
 	ActivityIndicator,
-	Button,
 	TouchableOpacity,
 	AppRegistry, 
 	TextInput, 
 	AsyncStorage 
 } from "react-native";
+import {Button} from 'react-native-elements';
 import Config from "./../config"
 import ImageSlider from 'react-native-image-slider';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
@@ -113,25 +113,31 @@ export class SingleProductScreen extends Component{
 				
 			
 				<ScrollView style={{flex:1}}>
+				
 					<View style={{height: 300}}>
 						<ImageSlider images={images}/>
 					</View>
 					
-					
-					<Text style={{marginLeft: 10, fontSize: 50, fontWeight: 'bold', color: '#000'}}>{this.state.data.TenMatHang}</Text>
-					<Text style={{marginLeft: 10, fontSize: 30,fontWeight: 'bold'}}>{this.state.data.Gia} VNĐ</Text>
-					<Text style={{marginLeft: 10, fontSize: 25, fontWeight: 'bold'}}>Xuất xứ: </Text>
+					<View style={styles.containertext}>
+					<Text style={{marginLeft: 10, fontSize: 30, fontWeight: 'bold'}}>{this.state.data.TenMatHang}</Text>
+					<Text style={{marginLeft: 10, fontSize: 20}}>{this.state.data.Gia} VNĐ</Text>
+					<Text style={{marginLeft: 10, fontSize: 20, fontWeight: 'bold'}}>Xuất xứ: </Text>
 					<Text style={{marginLeft: 10, fontSize: 20}}>{this.state.data.XuatXu}</Text>
-					<Text style={{marginLeft: 10, fontSize: 25, fontWeight: 'bold'}}>Mô tả: </Text>
+					<Text style={{marginLeft: 10, fontSize: 20, fontWeight: 'bold'}}>Mô tả: </Text>
 					<Text style={{marginLeft: 10, fontSize: 20}}>{this.state.data.MoTa}</Text>
-				
-					<View style={{width: '50%', alignSelf: 'center', marginTop: 20,marginBottom: 20 }}>
+					</View>
+					<View style={styles.container}>
+					<View style={styles.button}>
 						<Button
-						  onPress={() => this.onPressMua(this.state.data)}
-						  title="Thêm vào giỏ"
-						  color="#ffab23"
+							textStyle={{
+							fontSize: 25,}}
+							onPress={() => this.onPressMua(this.state.data)}
+							title="Thêm vào giỏ"
+							backgroundColor="#ffab23"
+							accessibilityLabel="Learn more about this purple button"
 						/>
 					</View>
+				</View>
 				</ScrollView>
 			</View>
 			
@@ -146,12 +152,22 @@ export default SingleProductScreen;
 const styles = StyleSheet.create({
 	container:{
 		flex:1,
-		alignItems: 'flex-start',
-		justifyContent: 'center',
+		alignItems: 'center',
+		justifyContent: 'center'
 
 	},
 	child:{
 		
-	}
+	},
+	button:{
+		marginTop:50,
+		marginBottom:20,
+		height: 60,
+		width: 330,	
+	},
+	containertext:{
+		marginTop:20,
+		marginLeft:20,
+	},
 
 })

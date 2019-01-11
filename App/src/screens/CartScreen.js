@@ -121,10 +121,10 @@ export class CartScreen extends Component{
 					data={this.state.cart}
 					renderItem={this.renderItem}
 				/>
-				<Text>
-				Tổng số tiền: {this.state.tongTien} VNĐ
-				
-				</Text>
+				<View style={{flexDirection: 'row', justifyContent:'flex-start', paddingTop:20}}>
+					<Text style={{fontSize: 25}}>Tổng số tiền: </Text>
+					<Text style={{fontSize: 25, fontWeight: 'bold', color:'#000'}}>{this.state.tongTien} VNĐ</Text>
+				</View>
 				<View style={{width: '50%', alignSelf: 'center', marginTop: 20,marginBottom: 20 }}>
 					<Button
 					  onPress={() => alert(JSON.stringify(this.state.cart))}
