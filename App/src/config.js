@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://192.168.56.1:80';
+const SERVER_URL = 'http://169.254.220.155:80';
 
 export default {
   SERVER_URL
