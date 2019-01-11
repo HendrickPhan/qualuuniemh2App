@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import{View, Text, StyleSheet} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
-import { Button } from 'react-native';
+import { Button } from 'react-native-elements';
 import { AsyncStorage } from "react-native"
 import Config from "./../config"
 
@@ -49,23 +49,28 @@ export class LoginScreen extends Component{
 	render(){
 		return (
 			<View style={styles.container}>
-				<Text style ={styles.titleText}>{this.state.titleText}</Text>
-				<Text style={styles.UserText}>{this.state.UserText}</Text>
-				<TextInput
-					style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-					onChangeText={(text) => this.setState({username: text})}
-				/>
-				<Text style={styles.PasswordText}>{this.state.PasswordText}</Text>
-				<TextInput secureTextEntry={true}
-					style={{height: 40,width: 200, borderColor: 'gray', borderWidth: 1,marginBottom:10}}
-					onChangeText={(text) => this.setState({password: text})}
-				/>
+				<View>
+					<Text style ={styles.titleText}>{this.state.titleText}</Text>
+					<TextInput
+						style={styles.UserText}
+						onChangeText={(text) => this.setState({username: text})}
+						 placeholder={this.state.UserText}
+					/>
+					<TextInput secureTextEntry={true}
+						style={styles.UserText}
+						onChangeText={(text) => this.setState({password: text})}
+						placeholder={this.state.PasswordText}
+					/>
+				</View>
+				<View style={styles.button}>
 				<Button
+					textStyle={{
+					fontSize: 25,}}
 				  onPress={this.onPressLogin}
 				  title="Đăng nhập"
-				  color="#841584"
+				  backgroundColor="#17A2B8"		 
 				/>
-				
+				</View>
 			</View>
 			
 		);
@@ -82,22 +87,32 @@ const styles = StyleSheet.create({
 	titleText: {
 		fontSize: 40,
 		fontWeight: 'bold',
-		color: 'red',
-		marginBottom:10,
-	},
-	PasswordText: {
-		fontSize: 20,
-		fontWeight: 'bold',
-		alignSelf: 'stretch',
-		marginLeft:110,
-		marginBottom:10,
+		color: '#17A2B8',
+		marginBottom:50,
+		textAlign:'center',
 	},
 	UserText: {
-		fontSize: 20,
+		height: 60,
+		width: 300, 
+		borderWidth: 1,
+		borderRadius: 2,
+		borderColor: 'white',
+		borderBottomWidth: 0,
+		shadowColor: 'white',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		elevation: 1,
+		marginBottom:10,
+		fontSize:   20,
 		fontWeight: 'bold',
 		alignSelf: 'stretch',
-		marginLeft:110,
-		marginBottom:10,
+	},
+	button:{
+		marginTop:50,
+		height: 60,
+		width: 330,	
 	}
+
 })
 AppRegistry.registerComponent('AwesomeProject', () => LoginScreen);
