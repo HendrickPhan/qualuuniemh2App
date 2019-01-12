@@ -8,7 +8,8 @@ import{View,
 	TouchableOpacity,
 	AppRegistry, 
 	TextInput, 
-	AsyncStorage 
+	AsyncStorage,
+	Image,
 } from "react-native";
 import {Button} from 'react-native-elements';
 import Config from "./../config"
@@ -113,7 +114,7 @@ export class SingleProductScreen extends Component{
 				
 			
 				<ScrollView style={{flex:1}}>
-				
+					<Image source={require('./img/background.jpg')} style={styles.backgroundImage}/>
 					<View style={{height: 300}}>
 						<ImageSlider images={images}/>
 					</View>
@@ -169,5 +170,12 @@ const styles = StyleSheet.create({
 		marginTop:20,
 		marginLeft:20,
 	},
-
+	backgroundImage: {
+		backgroundColor: '#ccc',
+          flex: 1,
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+	},
 })
