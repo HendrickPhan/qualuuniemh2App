@@ -55,6 +55,9 @@ export class LoginScreen extends Component{
 			});
 		
 	 }
+	 onPressRegister=()=>{
+		 this.props.navigation.navigate('Register');
+	 }
 	render(){
 		return (
 			<View style={styles.container}>
@@ -80,8 +83,21 @@ export class LoginScreen extends Component{
 				  title="Đăng nhập"
 				  backgroundColor="#ffab23"		 
 				/>
+				
 				</View>
+				<View style={styles.button}>
+				<Button
+					textStyle={{
+					fontSize: 25,}}
+				  onPress={this.onPressRegister}
+				  title="Đăng kí"
+				  backgroundColor="#ffab23"		 
+				/>
+				
+				
 			</View>
+			</View>
+			
 			
 		);
 	}
