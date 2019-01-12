@@ -1,10 +1,9 @@
 import React, {Component} from "react";
 import { createStackNavigator, createAppContainer,NavigationEvents } from 'react-navigation';
 import { LoginScreen } from './LoginScreen';
-
+import { Text,Button } from 'react-native-elements'
 import{View, 
 	Alert,
-	Text, 
 	StyleSheet, 
 	ScrollView, 
 	ActivityIndicator,
@@ -12,7 +11,7 @@ import{View,
 	AppRegistry, 
 	TextInput, 
 	AsyncStorage ,
-	Button
+	Image,
 } from "react-native";
 
 
@@ -128,13 +127,68 @@ export class UserScreen extends Component{
 		}
 		if(this.state.loggedIn == true){
 			return (
-				<View>
-					<Text>{this.state.info.HoVaTen}</Text>
-					<Button 
-					 title="Đăng Xuất"
-					
-					onPress={() => this.logout()}></Button>
-				</View>
+			 <ScrollView contentContainerStyle={styles.contentContainer}>
+				<Image source={require('./img/background.jpg')} style={styles.backgroundImage}/>
+				<View style={styles.container}>
+					<Text style ={styles.titleText}>Hồ sơ</Text>	
+						<View  style={{flex: 2, flexDirection: 'row'}}>
+							<View style={styles.inputtext}>
+							<Text style={styles.StyleText}>Họ và tên:</Text>
+							</View>
+							<Text style={styles.UserText}>{this.state.info.HoVaTen}</Text>
+						</View>
+						<View  style={{flex: 2, flexDirection: 'row'}}>
+							<View style={styles.inputtext}>
+							<Text style={styles.StyleText}>Email:</Text>
+							</View>
+							<Text style={styles.UserText}>{this.state.info.email}</Text>
+						</View>
+						<View  style={{flex: 1, flexDirection: 'row'}}>
+							<View style={styles.inputtext}>
+							<Text style={styles.StyleText}>Ngày sinh:</Text>
+							</View>
+							<Text style={styles.UserText}>{this.state.info.NgaySinh}</Text>
+						</View>
+						<View  style={{flex: 1, flexDirection: 'row'}}>
+							<View style={styles.inputtext}>
+							<Text style={styles.StyleText}>Số điện thoại:</Text>
+							</View>
+							<Text style={styles.UserText}>{this.state.info.SoDienThoai}</Text>
+						</View>
+						<View  style={{flex: 1, flexDirection: 'row'}}>
+							<View style={styles.inputtext}>
+							<Text style={styles.StyleText}>Giới tính:</Text>
+							</View>
+							<Text style={styles.UserText}>{this.state.info.GioiTinh}</Text>
+						</View>
+						<View  style={{flex: 1, flexDirection: 'row'}}>
+							<View style={styles.inputtext}>
+							<Text style={styles.StyleText}>Địa chỉ:</Text>
+							</View>
+							<Text style={styles.UserText}>{this.state.info.DiaChi}</Text>
+						</View>
+						<View  style={{flex: 1, flexDirection: 'row'}}>
+							<View style={styles.inputtext}>
+							<Text style={styles.StyleText}>Thành phố:</Text>
+							</View>
+							<Text style={styles.UserText}>{this.state.info.ThanhPho}</Text>
+						</View>
+						<View  style={{flex: 1, flexDirection: 'row'}}>
+							<View style={styles.inputtext}>
+							<Text style={styles.StyleText}>Quận:</Text>
+							</View>
+							<Text style={styles.UserText}>{this.state.info.Quan}</Text>
+						</View>
+						<View style={styles.button}>	
+							<Button 
+								title="Đăng Xuất"
+								backgroundColor="#ffab23"	
+								textStyle={{fontSize: 25,}}
+								onPress={() => this.logout()}>
+							</Button>
+						</View>
+					</View>
+			</ScrollView>
 			)
 		}
 		return(
@@ -151,5 +205,72 @@ export class UserScreen extends Component{
 	}
 	
 }
+const styles = StyleSheet.create({
+	container:{
+		flex:1,	
+		alignItems: 'center',
+		justifyContent: 'flex-start'
+	},
+	inputStyle: {
+		height: 40,
+		width: 200,
+		borderColor: 'gray', 
+		borderBottomWidth: 1,
+	},
+	titleText: {
+		fontSize: 40,
+		fontWeight: 'bold',
+		color: 'white',
+		marginTop:10,
+		marginBottom:40,
+		textAlign:'center',
+		textShadowColor: 'rgba(0, 0, 0, 1)',
+		textShadowRadius: 20
+	},
+	UserText: {
+		height: 40,
+		width: 250, 
+		borderWidth: 2,
+		borderRadius: 2,
+		borderColor: 'rgba(50,50,50,0.3)',
+		shadowColor: 'white',
+		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		fontSize:   20,
+		fontWeight: 'bold',
+		alignSelf: 'stretch',
+		marginBottom:20,
+		backgroundColor: 'rgba(255,255,255,0.6)',
+		paddingLeft:20,
+		paddingTop:5,
+		
+	},
+	button:{
+		marginTop:30,
+		marginBottom:30,
+		height: 60,
+		width: 330,	
+	},
+	StyleText:{
+		fontSize:   20,
+		fontWeight: 'bold',
+		alignSelf: 'stretch',
+		paddingTop:5,
+		marginRight:10,
+	},
+	inputtext:{
+		width:120,
+		paddingLeft:5,
+	},
+		backgroundImage: {
+		backgroundColor: '#ccc',
+          flex: 1,
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+	},
 
+	
+})
 export default UserScreen;

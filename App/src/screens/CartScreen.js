@@ -111,7 +111,9 @@ export class CartScreen extends Component{
 		}
 		
 		return (
-			<ScrollView>
+		<View style={{flex:1}}>
+			<ScrollView style={{flex:1}}>
+				<Image source={require('./img/background.jpg')} style={styles.backgroundImage}/>
 				<NavigationEvents
 				  onWillFocus={() => {
 					this.refetch();
@@ -133,7 +135,26 @@ export class CartScreen extends Component{
 					/>
 				</View>
 			</ScrollView>
+		</View>
 		);
 	}
 }
+const styles = StyleSheet.create({
+	backgroundImage: {
+		backgroundColor: '#ccc',
+          flex: 1,
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+		  resizeMode: 'cover', // or 'stretch',
+	},
+	container:{
+		
+		alignItems: 'flex-start',
+		justifyContent: 'center'
+	},
+
+	
+})
 export default CartScreen;

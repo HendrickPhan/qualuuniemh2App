@@ -172,8 +172,7 @@ export class RegisterScreen extends Component{
 					</View>
 				<View style={styles.button}>	
 					<Button
-					  textStyle={{
-						fontSize: 25,}}
+					  textStyle={{fontSize: 25,}}
 					  onPress={this.onPressRegister}
 					  title="Đăng ký"
 					  backgroundColor="#ffab23"		
