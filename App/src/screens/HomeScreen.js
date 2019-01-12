@@ -73,7 +73,7 @@ export class HomeScreen extends Component{
 			<ScrollView contentContainerStyle={styles.container}>
 		
 				
-				
+				<Image source={require('./img/background.jpg')} style={styles.backgroundImage}/>
 				<Image
 				style={styles.headerBG}
 				source={{uri: Config.SERVER_URL + "/upload/hp_big_img.jpg"}}
@@ -172,6 +172,14 @@ const styles = StyleSheet.create({
 		alignSelf: 'stretch',
 		marginLeft:110,
 		marginBottom:10,
-	}
+	},
+	backgroundImage: {
+		backgroundColor: '#ccc',
+          flex: 1,
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+	},
 })
 

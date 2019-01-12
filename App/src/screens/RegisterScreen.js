@@ -1,7 +1,9 @@
 import React, {Component} from "react";
-import{View, StyleSheet,ScrollView,Picker} from "react-native";
+import{View, StyleSheet,ScrollView,Picker,Image} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
 import { FormLabel, Text,FormInput, FormValidationMessage,Button } from 'react-native-elements'
+import Config from "./../config"
+import { AsyncStorage } from "react-native"
 export class RegisterScreen extends Component{
 	constructor(props) {
 		super(props);
@@ -20,6 +22,7 @@ export class RegisterScreen extends Component{
 		  TownshipText:'Quận',
 		  EmailValdate:true,
 		  RePasswordValdate:true,
+		  gioitinh:'Nam',
 		}
 	};
 	
@@ -38,25 +41,62 @@ export class RegisterScreen extends Component{
 					})
 				}
 			}
-			
-			else if(type=='RePassword'){
-				if(text==password){
-					this.setState({
-					RePasswordValdate:true,
-					})
+		}
+	onPressRegister= () => {
+		var params= {
+			username: this.state.username,
+            password: this.state.password,
+			password_confirmation:this.state.repassword,
+			UserName: this.state.UserName,
+			NgaySinh:  this.state.DoB,
+			SoDienThoai:  this.state.Phone,
+			GioiTinh: this.state.gioitinh,
+			email:this.state.Email,
+			DiaChi: this.state.Address,
+			ThanhPho: this.state.Town,
+			Quan: this.state.Township,
+		}
+		 let url = Config.SERVER_URL + "/api/register";
+		  fetch(url, {
+			  method: 'POST',
+			  headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			  },
+			  body: JSON.stringify({
+				username: params.username,
+				password: params.password,
+				password_confirmation:params.password_confirmation,
+				email: params.email,
+				HoVaTen:  params.UserName,
+				NgaySinh: params.NgaySinh,
+				SoDienThoai: params.SoDienThoai,
+				GioiTinh: params.GioiTinh,
+				DiaChi: params.DiaChi,
+				ThanhPho: params.ThanhPho,
+				Quan: params.Quan,
+			  }),
+			}) .then((response) => response.json())
+		
+			.then((responseJson) => {
+				alert(JSON.stringify(responseJson));
+				if(JSON.stringify(responseJson.status==200)||JSON.stringify(responseJson.status==401)){
+					AsyncStorage.setItem('USER_ID', JSON.stringify(responseJson.id));
+					AsyncStorage.setItem('USER_TOKEN_', JSON.stringify(responseJson.token));	
+					alert('Đăng kí thành công');
 				}
 				else{
-					this.setState({
-					RePasswordValdate:false,
-					})
+					alert(JSON.stringify(responseJson.errors));
 				}
-			}
-		}
-	onPressLearnMore() {
+			})
+			 .catch((error) => {
+			  console.error(error);
+			});
 	 }
 	render(){
 		return (
 	 <ScrollView contentContainerStyle={styles.contentContainer}>
+	  <Image source={require('./img/background.jpg')} style={styles.backgroundImage}/>
 			<View style={styles.container}>
 				<View>
 				<Text style ={styles.titleText}>{this.state.titleText}</Text>	
@@ -72,22 +112,30 @@ export class RegisterScreen extends Component{
 					/>
 					<TextInput secureTextEntry={true}
 						style={styles.UserText}
-						onChangeText={(text) => this.setState({password: text})}
+						onChangeText={(text) => this.setState({repassword: text})}
 						placeholder={this.state.RePasswordText}
 						style={[styles.UserText,!this.state.RePasswordValdate?styles.error:null]}
 					/>
 					<TextInput
 						style={styles.UserText}
-						placeholder={this.state.DoBText}
-						onChangeText={(text) => this.setState({text})}
+						onChangeText={(text) => this.setState({UserName: text})}
+						 placeholder={this.state.UserNameText}
 					/>
+					<TextInput
+						style={styles.UserText}
+						placeholder={this.state.DoBText}
+						onChangeText={(text) => this.setState({DoB:text})}
+					/>
+					<View style={styles.UserText}>
 					<Picker
-					  selectedValue={this.state.language}
-					  style={styles.UserText}
-					  onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
-					  <Picker.Item label="Male" value="Male" />
-					  <Picker.Item label="Female" value="Female" />
+					  selectedValue={this.state.gioitinh}
+					  onValueChange={(itemValue, itemIndex) => this.setState({gioitinh: itemValue})}
+					   style={{color:'#9E736E'}}>
+					  <Picker.Item label="Nam" value="Nam" />
+					  <Picker.Item label="Nữ" value="Nữ" />
+					  <Picker.Item label="Khác" value="Khác" />
 					</Picker>
+					</View>
 					<TextInput 
 						placeholder={this.state.PhoneText}
 						style={styles.UserText}
@@ -95,6 +143,7 @@ export class RegisterScreen extends Component{
 						value={this.state.myNumber}
 						maxLength={10}  //setting limit of input
 						style={styles.UserText}
+						onChangeText={(text) => this.setState({Phone:text})}
 					/>
 					<TextInput
 					  placeholder={this.state.EmailText}
@@ -103,31 +152,31 @@ export class RegisterScreen extends Component{
 					  value={this.state.email}
 					  style={
 					  [styles.UserText,!this.state.EmailValdate?styles.error:null]}
+					  onChangeText={(text) => this.setState({Email:text})}
 					/>
 					<TextInput
 						placeholder={this.state.AddressText}
 						style={styles.UserText}
-						onChangeText={(text) => this.setState({text})}
+						onChangeText={(text) => this.setState({Address:text})}
 					/>					
 					<TextInput
 						placeholder={this.state.TownText}
 						style={styles.UserText}
-						onChangeText={(text) => this.setState({text})}
+						onChangeText={(text) => this.setState({Town:text})}
 					/>
 					<TextInput
 						placeholder={this.state.TownshipText}
 						style={styles.UserText}
-						onChangeText={(text) => this.setState({text})}
+						onChangeText={(text) => this.setState({Township:text})}
 					/>
 					</View>
 				<View style={styles.button}>	
 					<Button
-					  onPress={this.onPressLearnMore}
 					  textStyle={{
 						fontSize: 25,}}
-					  onPress={this.onPressLogin}
+					  onPress={this.onPressRegister}
 					  title="Đăng ký"
-					  backgroundColor="#17A2B8"		
+					  backgroundColor="#ffab23"		
 					/>
 				</View>
 			</View>
@@ -156,34 +205,44 @@ const styles = StyleSheet.create({
 	titleText: {
 		fontSize: 40,
 		fontWeight: 'bold',
-		color: '#17A2B8',
+		color: 'white',
 		marginTop:10,
 		marginBottom:40,
 		textAlign:'center',
+		textShadowColor: 'rgba(0, 0, 0, 1)',
+		textShadowRadius: 20
 	},
 	UserText: {
 		height: 60,
 		width: 300, 
-		borderWidth: 1,
+		borderWidth: 2,
 		borderRadius: 2,
-		borderColor: 'white',
-		borderBottomWidth: 0,
+		borderColor: 'rgba(50,50,50,0.3)',
 		shadowColor: 'white',
-		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.8,
 		shadowRadius: 2,
-		elevation: 1,
 		fontSize:   20,
 		fontWeight: 'bold',
 		alignSelf: 'stretch',
 		marginBottom:20,
+		backgroundColor: 'rgba(255,255,255,0.6)',
+		paddingLeft:20,
+		
 	},
 	button:{
 		marginTop:50,
 		marginBottom:50,
 		height: 60,
 		width: 330,	
-	}
+	},
+	backgroundImage: {
+		backgroundColor: '#ccc',
+          flex: 1,
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+	},
 
 	
 })
