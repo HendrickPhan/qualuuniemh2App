@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import { createStackNavigator, createAppContainer,NavigationEvents } from 'react-navigation';
 import { LoginScreen } from './LoginScreen';
-import { Text,Button } from 'react-native-elements'
+import { Text,Button } from 'react-native-elements';
+
 import{View, 
 	Alert,
 	StyleSheet, 
@@ -30,6 +31,7 @@ export class UserScreen extends Component{
 			
 			userToken: '',
 		};
+
 	}
 	
 	
@@ -60,7 +62,10 @@ export class UserScreen extends Component{
 	}
 	
 	
+	
 	refetch(){
+		isLoading: true,
+		this.props.navigation.setParams({ loggedIn: false });
 		AsyncStorage.getItem('USER_TOKEN_', (err, result)=> {
 			if(JSON.parse(result) != null){
 			this.setState({userToken: JSON.parse(result)})
@@ -103,13 +108,20 @@ export class UserScreen extends Component{
 			}
 		});		
 		
-	}
+	};
 	
+			
+		
+
+
 	render(){
 		const { navigation } = this.props;
 		const loggedIn = navigation.getParam('loggedIn','');
-
-		if(this.state.isLoading){
+		if(loggedIn){
+			this.refetch();
+		}
+		if(this.state.isLoading || loggedIn){
+			
 		  return(
 			<View style={{flex: 1, padding: 20}}>
 			  <ActivityIndicator/>
@@ -123,13 +135,22 @@ export class UserScreen extends Component{
 		}
 		
 		if(this.state.loggedIn == false && loggedIn!=true){
-			this.props.navigation.navigate('Login');
+			/*this.props.navigation.navigate('Login');*/
+			return(
+			<LoginScreen navigation={this.props.navigation} refetch={this.refetch}/>
+			)
 		}
-		if(this.state.loggedIn == true){
+		if(this.state.loggedIn ){
+			
 			return (
 			 <ScrollView contentContainerStyle={styles.contentContainer}>
 				<Image source={require('./img/background.jpg')} style={styles.backgroundImage}/>
 				<View style={styles.container}>
+					<NavigationEvents
+					  onWillFocus={() => {
+						this.refetch();
+					  }}
+					/>
 					<Text style ={styles.titleText}>Hồ sơ</Text>	
 						<View  style={{flex: 2, flexDirection: 'row'}}>
 							<View style={styles.inputtext}>

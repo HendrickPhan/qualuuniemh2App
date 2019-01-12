@@ -39,11 +39,7 @@ export class SingleProductScreen extends Component{
 		};
 	}
 	componentDidMount(){
-		AsyncStorage.getItem('USER_ID', (err, result)=> {
-			if(JSON.parse(result) != null){
-				this.setState({userId: JSON.parse(result)});
-			}	
-		});
+		
 		
 		
 		const { navigation } = this.props;
@@ -68,7 +64,11 @@ export class SingleProductScreen extends Component{
 	}
 	onPressMua = (matHang) => {
 		/*AsyncStorage.clear();*/
-
+		AsyncStorage.getItem('USER_ID', (err, result)=> {
+			if(JSON.parse(result) != null){
+				this.setState({userId: JSON.parse(result)});
+			}	
+		});
 		AsyncStorage.getItem('Cart', (err, result) => {
 			let cart = JSON.parse(result);
 			cart = cart == null ? [] : cart;

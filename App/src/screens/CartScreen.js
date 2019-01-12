@@ -28,11 +28,7 @@ export class CartScreen extends Component{
 		}
 	};
 	componentDidMount(){
-		AsyncStorage.getItem('USER_ID', (err, result)=> {
-			if(JSON.parse(result) != null){
-				this.setState({userId: JSON.parse(result)});
-			}	
-		});
+		
 		this.refetch();
 		this.setState({
 			isLoading: false
@@ -46,6 +42,11 @@ export class CartScreen extends Component{
 		this.setState({tongTien: tong})
 	}
 	refetch(){
+		AsyncStorage.getItem('USER_ID', (err, result)=> {
+			if(JSON.parse(result) != null){
+				this.setState({userId: JSON.parse(result)});
+			}	
+		});
 		AsyncStorage.getItem('Cart', (err, result)=> {
 			let cartItems = [];
 			if(JSON.parse(result) != null){

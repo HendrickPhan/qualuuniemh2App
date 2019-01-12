@@ -2,9 +2,7 @@ import React, {Component} from "react";
 import{View, Text, StyleSheet,AppRegistry, TextInput,Image,AsyncStorage} from "react-native";
 import { Button } from 'react-native-elements';
 import Config from "./../config"
-import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { withNavigation } from 'react-navigation';
-
+import { createStackNavigator, createAppContainer,NavigationEvents } from 'react-navigation';
 
 
 export class LoginScreen extends Component{
@@ -18,6 +16,8 @@ export class LoginScreen extends Component{
 		  password: '',
 		  isLogged: false,
 		};
+		
+		console.log(props);
 	}
 		
 	onPressLogin = () => {
@@ -43,7 +43,9 @@ export class LoginScreen extends Component{
 					alert("Đăng nhập thành công");
 					AsyncStorage.setItem('USER_ID', JSON.stringify(responseJson.id));
 					AsyncStorage.setItem('USER_TOKEN_', JSON.stringify(responseJson.token));
-					this.props.navigation.navigate('User',{loggedIn: true});
+					
+					this.props.navigation.navigate('User',{loggedIn: true,refetch: this.props.refetch.bind(this)});
+					
 				}
 				else{
 					alert(JSON.stringify(responseJson));
@@ -89,7 +91,7 @@ export class LoginScreen extends Component{
 				<Button
 					textStyle={{
 					fontSize: 25,}}
-				  onPress={this.onPressRegister}
+				  onPress={()=>{this.props.navigation.navigate('Register')}}
 				  title="Đăng kí"
 				  backgroundColor="#ffab23"		 
 				/>
@@ -102,7 +104,7 @@ export class LoginScreen extends Component{
 		);
 	}
 }
-export default withNavigation(LoginScreen);
+export default LoginScreen;
 
 const styles = StyleSheet.create({
 	container:{
