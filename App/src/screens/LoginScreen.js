@@ -4,6 +4,10 @@ import { AppRegistry, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 import { AsyncStorage } from "react-native"
 import Config from "./../config"
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { withNavigation } from 'react-navigation';
+
+
 
 export class LoginScreen extends Component{
 	constructor(props) {
@@ -14,10 +18,9 @@ export class LoginScreen extends Component{
 		  PasswordText: 'Mật khẩu',
 		  userName: '',
 		  password: '',
-		  isLogged: false
+		  isLogged: false,
 		};
 	}
-	
 		
 	onPressLogin = () => {
 		 var params = {
@@ -38,8 +41,16 @@ export class LoginScreen extends Component{
 			  }),
 			}) .then((response) => response.json())
 			.then((responseJson) => {
-				AsyncStorage.setItem('USER_ID', JSON.stringify(responseJson.id));
-				AsyncStorage.setItem('USER_TOKEN_', JSON.stringify(responseJson.token));	
+				if(responseJson.status == 1){
+					alert("Đăng nhập thành công");
+					AsyncStorage.setItem('USER_ID', JSON.stringify(responseJson.id));
+					AsyncStorage.setItem('USER_TOKEN_', JSON.stringify(responseJson.token));
+					this.props.navigation.navigate('User',{loggedIn: true});
+				}
+				else{
+					alert(responseJson.error);
+					
+				}
 			})
 			 .catch((error) => {
 			  console.error(error);
@@ -76,7 +87,7 @@ export class LoginScreen extends Component{
 		);
 	}
 }
-export default LoginScreen;
+export default withNavigation(LoginScreen);
 
 const styles = StyleSheet.create({
 	container:{
@@ -115,4 +126,3 @@ const styles = StyleSheet.create({
 	}
 
 })
-AppRegistry.registerComponent('AwesomeProject', () => LoginScreen);

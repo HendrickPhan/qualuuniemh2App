@@ -30,7 +30,7 @@ export class CartScreen extends Component{
 	componentDidMount(){
 		AsyncStorage.getItem('USER_ID', (err, result)=> {
 			if(JSON.parse(result) != null){
-				this.setState({user_id: JSON.parse(result)});
+				this.setState({userId: JSON.parse(result)});
 			}	
 		});
 		this.refetch();
@@ -127,7 +127,7 @@ export class CartScreen extends Component{
 				</View>
 				<View style={{width: '50%', alignSelf: 'center', marginTop: 20,marginBottom: 20 }}>
 					<Button
-					  onPress={() => alert(JSON.stringify(this.state.cart))}
+					  onPress={() => {this.props.navigation.navigate('Checkout',{cart: this.state.cart, tongTien: this.state.tongTien})}}
 					  title="Đặt hàng"
 					  color="#ffab23"
 					/>

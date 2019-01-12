@@ -40,7 +40,7 @@ export class SingleProductScreen extends Component{
 	componentDidMount(){
 		AsyncStorage.getItem('USER_ID', (err, result)=> {
 			if(JSON.parse(result) != null){
-				this.setState({user_id: JSON.parse(result)});
+				this.setState({userId: JSON.parse(result)});
 			}	
 		});
 		

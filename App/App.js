@@ -7,6 +7,8 @@ import { ListProductScreen } from './src/screens/ListProductScreen';
 import { ListTypeOfProductScreen } from './src/screens/ListTypeOfProductScreen';
 import { SingleProductScreen } from './src/screens/SingleProductScreen';
 import { CartScreen } from './src/screens/CartScreen';
+import { CheckoutScreen } from './src/screens/CheckoutScreen';
+import { UserScreen } from './src/screens/UserScreen';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from "react-navigation";
 import React, {Component} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -31,7 +33,7 @@ const AppTabNavigator = createBottomTabNavigator({
       },
     },
   User: {
-      screen: LoginScreen,
+      screen: UserScreen,
       navigationOptions: {
         tabBarLabel:"User",
         tabBarIcon: ({ tintColor }) => (
@@ -69,6 +71,9 @@ const App = createStackNavigator({
   },
   SingleProduct:{
 	screen: SingleProductScreen
+  },
+  Checkout:{
+	screen: CheckoutScreen
   },
   Tabs: {
 	screen: AppTabNavigator,
