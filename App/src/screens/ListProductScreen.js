@@ -16,6 +16,10 @@ import Config from "./../config"
 import { ItemPreview } from "./../components/ItemPreview";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 export class ListProductScreen extends Component{
+	static navigationOptions =({navigation}) =>( {
+		headerTitle: "Mặt hàng",
+		
+	});
 	constructor(props) {
 		// lay tham so duoc truyen
 			
