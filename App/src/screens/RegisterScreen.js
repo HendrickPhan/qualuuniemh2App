@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import{View, StyleSheet,ScrollView,Picker} from "react-native";
+import{View, StyleSheet,ScrollView,Picker,Image} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
 import { FormLabel, Text,FormInput, FormValidationMessage,Button } from 'react-native-elements'
 import Config from "./../config"
@@ -96,6 +96,7 @@ export class RegisterScreen extends Component{
 	render(){
 		return (
 	 <ScrollView contentContainerStyle={styles.contentContainer}>
+	  <Image source={require('./img/background.jpg')} style={styles.backgroundImage}/>
 			<View style={styles.container}>
 				<View>
 				<Text style ={styles.titleText}>{this.state.titleText}</Text>	
@@ -125,14 +126,16 @@ export class RegisterScreen extends Component{
 						placeholder={this.state.DoBText}
 						onChangeText={(text) => this.setState({DoB:text})}
 					/>
+					<View style={styles.UserText}>
 					<Picker
 					  selectedValue={this.state.gioitinh}
-					  style={styles.UserText}
-					  onValueChange={(itemValue, itemIndex) => this.setState({gioitinh: itemValue})}>
+					  onValueChange={(itemValue, itemIndex) => this.setState({gioitinh: itemValue})}
+					   style={{color:'#9E736E'}}>
 					  <Picker.Item label="Nam" value="Nam" />
 					  <Picker.Item label="Nữ" value="Nữ" />
 					  <Picker.Item label="Khác" value="Khác" />
 					</Picker>
+					</View>
 					<TextInput 
 						placeholder={this.state.PhoneText}
 						style={styles.UserText}
@@ -173,7 +176,7 @@ export class RegisterScreen extends Component{
 						fontSize: 25,}}
 					  onPress={this.onPressRegister}
 					  title="Đăng ký"
-					  backgroundColor="#17A2B8"		
+					  backgroundColor="#ffab23"		
 					/>
 				</View>
 			</View>
@@ -202,34 +205,44 @@ const styles = StyleSheet.create({
 	titleText: {
 		fontSize: 40,
 		fontWeight: 'bold',
-		color: '#17A2B8',
+		color: 'white',
 		marginTop:10,
 		marginBottom:40,
 		textAlign:'center',
+		textShadowColor: 'rgba(0, 0, 0, 1)',
+		textShadowRadius: 20
 	},
 	UserText: {
 		height: 60,
 		width: 300, 
-		borderWidth: 1,
+		borderWidth: 2,
 		borderRadius: 2,
-		borderColor: 'white',
-		borderBottomWidth: 0,
+		borderColor: 'rgba(50,50,50,0.3)',
 		shadowColor: 'white',
-		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.8,
 		shadowRadius: 2,
-		elevation: 1,
 		fontSize:   20,
 		fontWeight: 'bold',
 		alignSelf: 'stretch',
 		marginBottom:20,
+		backgroundColor: 'rgba(255,255,255,0.6)',
+		paddingLeft:20,
+		
 	},
 	button:{
 		marginTop:50,
 		marginBottom:50,
 		height: 60,
 		width: 330,	
-	}
+	},
+	backgroundImage: {
+		backgroundColor: '#ccc',
+          flex: 1,
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+	},
 
 	
 })

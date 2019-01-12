@@ -1,8 +1,6 @@
 import React, {Component} from "react";
-import{View, Text, StyleSheet} from "react-native";
-import { AppRegistry, TextInput } from 'react-native';
+import{View, Text, StyleSheet,AppRegistry, TextInput,Image,AsyncStorage} from "react-native";
 import { Button } from 'react-native-elements';
-import { AsyncStorage } from "react-native"
 import Config from "./../config"
 
 export class LoginScreen extends Component{
@@ -49,6 +47,7 @@ export class LoginScreen extends Component{
 	render(){
 		return (
 			<View style={styles.container}>
+			 <Image source={require('./img/background.jpg')} style={styles.backgroundImage}/>
 				<View>
 					<Text style ={styles.titleText}>{this.state.titleText}</Text>
 					<TextInput
@@ -68,7 +67,7 @@ export class LoginScreen extends Component{
 					fontSize: 25,}}
 				  onPress={this.onPressLogin}
 				  title="Đăng nhập"
-				  backgroundColor="#17A2B8"		 
+				  backgroundColor="#ffab23"		 
 				/>
 				</View>
 			</View>
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
 	titleText: {
 		fontSize: 40,
 		fontWeight: 'bold',
-		color: '#17A2B8',
+		color: 'white',
 		marginBottom:50,
 		textAlign:'center',
 	},
@@ -103,16 +102,25 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.8,
 		shadowRadius: 2,
 		elevation: 1,
-		marginBottom:10,
 		fontSize:   20,
 		fontWeight: 'bold',
 		alignSelf: 'stretch',
+		marginBottom:20,
+		backgroundColor: 'rgba(255,255,255,0.6)',
 	},
 	button:{
 		marginTop:50,
 		height: 60,
 		width: 330,	
-	}
+	},
+	backgroundImage: {
+		backgroundColor: '#ccc',
+          flex: 1,
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+	},
 
 })
 AppRegistry.registerComponent('AwesomeProject', () => LoginScreen);
