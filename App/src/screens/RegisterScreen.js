@@ -1,9 +1,10 @@
 import React, {Component} from "react";
 import{View, StyleSheet,ScrollView,Picker,Image} from "react-native";
-import { AppRegistry, TextInput } from 'react-native';
-import { FormLabel, Text,FormInput, FormValidationMessage,Button } from 'react-native-elements'
+import { AppRegistry, TextInput,Text} from 'react-native';
+import { FormLabel,FormInput, FormValidationMessage,Button } from 'react-native-elements'
 import Config from "./../config"
 import { AsyncStorage } from "react-native"
+import DatePicker from "react-native-datepicker"
 export class RegisterScreen extends Component{
 	constructor(props) {
 		super(props);
@@ -23,6 +24,7 @@ export class RegisterScreen extends Component{
 		  EmailValdate:true,
 		  RePasswordValdate:true,
 		  gioitinh:'Nam',
+		  date:"2016-05-15",
 		}
 	};
 	
@@ -121,16 +123,39 @@ export class RegisterScreen extends Component{
 						onChangeText={(text) => this.setState({UserName: text})}
 						 placeholder={this.state.UserNameText}
 					/>
-					<TextInput
-						style={styles.UserText}
-						placeholder={this.state.DoBText}
-						onChangeText={(text) => this.setState({DoB:text})}
-					/>
+					<View  style ={{flexDirection: "row"}}>
+						<View style={{paddingTop:10,}}>
+						<Text style={styles.DoBText}> Ngày sinh: </Text>
+						</View>
+						<DatePicker
+							style={{width: 200}}
+							date={this.state.date}
+							mode="date"
+							placeholder="select date"
+							format="YYYY-MM-DD"
+							minDate="1900-05-01"
+							maxDate="2018-06-01"
+							confirmBtnText="Confirm"
+							cancelBtnText="Cancel"
+							customStyles={{
+							  dateIcon: {
+								position: 'absolute',
+								left: 0,
+								top: 4,
+								marginLeft: 0
+							  },
+							  dateInput: {
+								marginLeft: 36
+							  }
+							}}
+							onDateChange={(date) => {this.setState({DoB: date})}}
+						/>
+					</View>
 					<View style={styles.UserText}>
 					<Picker
 					  selectedValue={this.state.gioitinh}
 					  onValueChange={(itemValue, itemIndex) => this.setState({gioitinh: itemValue})}
-					   style={{color:'#9E736E'}}>
+					   style={{color:'#9A989E'}}>
 					  <Picker.Item label="Nam" value="Nam" />
 					  <Picker.Item label="Nữ" value="Nữ" />
 					  <Picker.Item label="Khác" value="Khác" />
@@ -141,7 +166,7 @@ export class RegisterScreen extends Component{
 						style={styles.UserText}
 						keyboardType='numeric'
 						value={this.state.myNumber}
-						maxLength={10}  //setting limit of input
+						maxLength={10}
 						style={styles.UserText}
 						onChangeText={(text) => this.setState({Phone:text})}
 					/>
@@ -168,7 +193,7 @@ export class RegisterScreen extends Component{
 						placeholder={this.state.TownshipText}
 						style={styles.UserText}
 						onChangeText={(text) => this.setState({Township:text})}
-					/>
+					/>	
 					</View>
 				<View style={styles.button}>	
 					<Button
@@ -213,7 +238,7 @@ const styles = StyleSheet.create({
 	},
 	UserText: {
 		height: 60,
-		width: 300, 
+		width: 320, 
 		borderWidth: 2,
 		borderRadius: 2,
 		borderColor: 'rgba(50,50,50,0.3)',
@@ -225,7 +250,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'stretch',
 		marginBottom:20,
 		backgroundColor: 'rgba(255,255,255,0.6)',
-		paddingLeft:20,
+		paddingLeft:22,
 		
 	},
 	button:{
@@ -242,6 +267,12 @@ const styles = StyleSheet.create({
           height: '100%',
           justifyContent: 'center',
 	},
-
-	
+	DoBText:{
+		fontSize:   20,
+		fontWeight: 'bold',
+		alignSelf: 'stretch',
+		marginBottom:20,
+		paddingLeft:15,
+		color:'#9A989E',
+	}
 })
