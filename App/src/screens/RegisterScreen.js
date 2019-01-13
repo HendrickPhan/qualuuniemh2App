@@ -24,7 +24,7 @@ export class RegisterScreen extends Component{
 		  EmailValdate:true,
 		  RePasswordValdate:true,
 		  gioitinh:'Nam',
-		  date:"2016-05-15",
+		  date:'',	
 		}
 	};
 	
@@ -129,12 +129,12 @@ export class RegisterScreen extends Component{
 						</View>
 						<DatePicker
 							style={{width: 200}}
-							date={this.state.date}
+							 date={this.state.DoB}
 							mode="date"
 							placeholder="select date"
 							format="YYYY-MM-DD"
-							minDate="1900-05-01"
-							maxDate="2018-06-01"
+							minDate="1950-05-01"
+							maxDate="2019-01-01"
 							confirmBtnText="Confirm"
 							cancelBtnText="Cancel"
 							customStyles={{
@@ -150,6 +150,7 @@ export class RegisterScreen extends Component{
 							}}
 							onDateChange={(date) => {this.setState({DoB: date})}}
 						/>
+
 					</View>
 					<View style={styles.UserText}>
 					<Picker
@@ -274,5 +275,5 @@ const styles = StyleSheet.create({
 		marginBottom:20,
 		paddingLeft:15,
 		color:'#9A989E',
-	}
+	},
 })
