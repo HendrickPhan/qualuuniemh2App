@@ -30,9 +30,6 @@ export class CartScreen extends Component{
 	componentDidMount(){
 		
 		this.refetch();
-		this.setState({
-			isLoading: false
-		});
 	}
 	tinhTongTien(){
 		let tong = 0;
@@ -59,6 +56,7 @@ export class CartScreen extends Component{
 			}	
 			this.setState({
 				cart: cartItems,
+				isLoading: false
 			});
 			this.tinhTongTien();
 		});
@@ -113,8 +111,9 @@ export class CartScreen extends Component{
 		
 		return (
 		<View style={{flex:1}}>
+			<Image source={require('./img/background.jpg')} style={styles.backgroundImage}/>
 			<ScrollView style={{flex:1}}>
-				<Image source={require('./img/background.jpg')} style={styles.backgroundImage}/>
+				
 				<NavigationEvents
 				  onWillFocus={() => {
 					this.refetch();

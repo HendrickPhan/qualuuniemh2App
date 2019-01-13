@@ -246,7 +246,8 @@ const styles = StyleSheet.create({
 		marginBottom:40,
 		textAlign:'center',
 		textShadowColor: 'rgba(0, 0, 0, 1)',
-		textShadowRadius: 20
+		textShadowRadius: 20,
+		padding: 20
 	},
 	UserText: {
 		height: 40,

@@ -54,6 +54,10 @@ const AppTabNavigator = createBottomTabNavigator({
 
 
 const App = createStackNavigator({
+	Thanks: {
+		screen: ThankyouScreen
+		
+	},
   Home: {
     screen: HomeScreen
   },
