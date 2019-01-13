@@ -5,7 +5,8 @@ import {ScrollView,
 		View,
 		StyleSheet, 
 		ImageBackground, 
-		TouchableOpacity
+		TouchableOpacity,
+		Dimensions
 } from 'react-native';
 
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from "react-navigation";
@@ -21,14 +22,12 @@ export class ItemTypePreview extends Component {
 	  		let url = Config.SERVER_URL + this.props.image;
     return (
 	
-		<View>
-			
-				  <ImageBackground source={{uri: url}} style={{width: 100, height: 100}}>
+		<View>	
+			<ImageBackground source={{uri: url}} style={{width:Dimensions.get('window').width / 2,height:Dimensions.get('window').width / 2}}>
 					<View style={{position: 'absolute', width:'100%', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
-					 <Text style={styles.textStyle}>{this.props.ten}</Text>
+						<Text style={styles.textStyle}>{this.props.ten}</Text>
 					</View>
-				  </ImageBackground>
-			
+			</ImageBackground>
 		</View>	
 	
     );
@@ -41,7 +40,7 @@ const styles = StyleSheet.create({
 	textStyle : {		
 		textShadowColor: 'rgb(0, 0, 0)',
 		color: 'rgba(255, 255, 255, 1.0)',
-		textShadowRadius: 10,
+		textShadowRadius: 15,
 		fontSize: 25,
 		fontWeight: 'bold'
 	}
