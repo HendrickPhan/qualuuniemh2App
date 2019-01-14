@@ -9,6 +9,7 @@ import { SingleProductScreen } from './src/screens/SingleProductScreen';
 import { CartScreen } from './src/screens/CartScreen';
 import { CheckoutScreen } from './src/screens/CheckoutScreen';
 import { UserScreen } from './src/screens/UserScreen';
+import { DonHangScreen } from './src/screens/DonHangScreen';
 import { SearchResultScreen } from './src/screens/SearchResultScreen';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from "react-navigation";
 import React, {Component} from 'react';
@@ -82,6 +83,9 @@ const App = createStackNavigator({
   },
   Checkout:{
 	screen: CheckoutScreen
+  },
+  DonHang:{
+	screen: DonHangScreen
   },
   Tabs: {
 	screen: AppTabNavigator,

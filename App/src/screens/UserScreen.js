@@ -201,6 +201,14 @@ export class UserScreen extends Component{
 						</View>
 						<View style={styles.button}>	
 							<Button 
+								title="Đơn Hàng"
+								backgroundColor="#ffab23"	
+								textStyle={{fontSize: 25,}}
+								onPress={() => {this.props.navigation.navigate('DonHang')}}>
+							</Button>
+						</View>
+						<View style={styles.button}>	
+							<Button 
 								title="Đăng Xuất"
 								backgroundColor="#ffab23"	
 								textStyle={{fontSize: 25,}}
