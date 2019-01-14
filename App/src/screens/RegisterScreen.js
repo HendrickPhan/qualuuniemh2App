@@ -5,6 +5,7 @@ import { FormLabel,FormInput, FormValidationMessage,Button } from 'react-native-
 import Config from "./../config"
 import { AsyncStorage } from "react-native"
 import DatePicker from "react-native-datepicker"
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 export class RegisterScreen extends Component{
 	constructor(props) {
 		super(props);
@@ -81,11 +82,10 @@ export class RegisterScreen extends Component{
 			}) .then((response) => response.json())
 		
 			.then((responseJson) => {
-				alert(JSON.stringify(responseJson));
-				if(JSON.stringify(responseJson.status==200)||JSON.stringify(responseJson.status==401)){
+				if(JSON.stringify(responseJson.status) == 200){
 					AsyncStorage.setItem('USER_ID', JSON.stringify(responseJson.id));
 					AsyncStorage.setItem('USER_TOKEN_', JSON.stringify(responseJson.token));	
-					alert('Đăng kí thành công');
+					this.props.navigation.navigate('User', {loggedIn: true});
 				}
 				else{
 					alert(JSON.stringify(responseJson.errors));

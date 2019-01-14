@@ -28,7 +28,6 @@ export class UserScreen extends Component{
 			action: 1,
 			info: '',
 			isLoading: true,
-			
 			userToken: '',
 		};
 

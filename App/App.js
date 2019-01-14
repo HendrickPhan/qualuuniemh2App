@@ -9,6 +9,7 @@ import { SingleProductScreen } from './src/screens/SingleProductScreen';
 import { CartScreen } from './src/screens/CartScreen';
 import { CheckoutScreen } from './src/screens/CheckoutScreen';
 import { UserScreen } from './src/screens/UserScreen';
+import { SearchResultScreen } from './src/screens/SearchResultScreen';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from "react-navigation";
 import React, {Component} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -75,6 +76,9 @@ const App = createStackNavigator({
   },
   SingleProduct:{
 	screen: SingleProductScreen
+  },
+  SearchResult:{
+	  screen: SearchResultScreen
   },
   Checkout:{
 	screen: CheckoutScreen

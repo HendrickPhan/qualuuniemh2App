@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://192.168.137.1:80';
+const SERVER_URL = 'https://qualuuniemh2.000webhostapp.com';
 
 export default {
   SERVER_URL

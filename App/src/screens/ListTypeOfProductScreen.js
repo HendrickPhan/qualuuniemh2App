@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import{
 	View, 
-	Text, 
+	Text,	
 	StyleSheet,
 	ActivityIndicator, 
 	ScrollView,
@@ -16,6 +16,7 @@ import { Button } from 'react-native';
 import { AsyncStorage } from "react-native"
 import Config from "./../config"
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export class ListTypeOfProductScreen extends Component{
 	constructor(props) {
@@ -23,6 +24,7 @@ export class ListTypeOfProductScreen extends Component{
 		this.state = {
 			isLoading: true,
 			loaiMatHangs: [],
+			searchKeyWord: '',
 		};
 	}
 	
@@ -61,6 +63,10 @@ export class ListTypeOfProductScreen extends Component{
 			</TouchableOpacity>
 		)
 	}	
+	
+	searchPress(){
+		this.props.navigation.navigate('SearchResult',{searchWord: this.state.searchKeyWord});
+	}
 	render(){
 		if(this.state.isLoading){
 		  return(
@@ -71,6 +77,16 @@ export class ListTypeOfProductScreen extends Component{
 		}
 		return (
 			<View>
+				<View style={{flexDirection: 'row'}}>
+					<TextInput
+						style={{fontSize: 25,fontWeight: 'bold', width: "90%"}}
+						onChangeText={(text) => this.setState({searchKeyWord: text})}
+						 placeholder="Tìm kiếm"
+					/>
+					<TouchableOpacity style={{justifyContent: 'center'}} onPress={() =>{this.searchPress()}} >
+						<Icon name="search" size={25} color="#000" style={{marginRight: 10}}/>
+					</TouchableOpacity>
+				</View>
 				<FlatList 
 					data={this.state.loaiMatHangs}
 					renderItem={this.renderItem}

@@ -27,7 +27,9 @@ export class HomeScreen extends Component{
 	onPressLoaiMatHang = (id) => {
 		this.props.navigation.navigate('ListProduct',{id: id})
 	}
-	
+	onPressMatHang = (id) => {
+		this.props.navigation.navigate('SingleProduct',{id: id})
+	}
 	
 	constructor(props) {
 		super(props);
@@ -115,20 +117,21 @@ export class HomeScreen extends Component{
 				
 				
 				<Text style={styles.titleText}>Mặt hàng tiêu biểu: </Text>
+				<View style={styles.MatHangContainer}>
 				{this.state.mathangs.map((mathang, key) => {
 					 return (
-					
-					 	<ItemPreview image={mathang.HinhAnh}
-						ten={mathang.TenMatHang}
-						gia={mathang.Gia}
-						xuatXu={mathang.XuatXu}
-						key={key}
-						id={mathang.id}
-						/>
-					
+						<TouchableOpacity onPress={() => this.onPressMatHang(mathang.id)}>
+							<ItemPreview image={mathang.HinhAnh}
+							ten={mathang.TenMatHang}
+							gia={mathang.Gia}
+							xuatXu={mathang.XuatXu}
+							key={key}
+							id={mathang.id}
+							/>
+						</TouchableOpacity>
 					 );
 				  })}
-			
+				</View>
 			</ScrollView>
 			
 		);
@@ -153,6 +156,9 @@ const styles = StyleSheet.create({
 		width: '100%',
 		justifyContent: 'space-between',
 		marginBottom: 10
+	},
+	MatHangContainer:{
+		width: '100%',
 	},
 	titleText: {
 		fontSize: 20,

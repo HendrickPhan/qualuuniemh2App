@@ -11,6 +11,7 @@ import{
 	TouchableOpacity,
 	Image
 } from "react-native";
+import Config from "./../config"
 import { AppRegistry, TextInput } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { NavigationEvents } from "react-navigation";
@@ -34,7 +35,7 @@ export class CartScreen extends Component{
 	tinhTongTien(){
 		let tong = 0;
 		for (i = 0; i < this.state.cart.length; i++) {
-		  tong+= this.state.cart[i].gia;
+		  tong+= parseInt(this.state.cart[i].gia);
 		}
 		this.setState({tongTien: tong})
 	}
@@ -61,6 +62,47 @@ export class CartScreen extends Component{
 			this.tinhTongTien();
 		});
 		
+	}
+	
+	checkoutClick = ()=>{
+
+		if(this.state.userId == -1){
+			this.props.navigation.navigate('Checkout',{cart: this.state.cart, tongTien: this.state.tongTien})
+		}
+		else{
+			var tongTien = this.state.tongTien;
+			var cart = this.state.cart;
+			let url = Config.SERVER_URL + "/api/checkout1";
+			
+			AsyncStorage.getItem('USER_TOKEN_', (err, result)=> {
+			let token = "Bearer " + JSON.parse(result);
+			console.log(token);
+			 fetch(url, {
+				  method: 'POST',
+				  headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+					Authorization: token,
+				  },
+				  body: JSON.stringify({
+					tongTien: tongTien,
+					cart: cart,
+				  }),
+				}) .then((response) => response.json())
+				.then((responseJson) => {
+					if(responseJson.status == 1){
+						AsyncStorage.removeItem('Cart');
+						this.props.navigation.navigate('Thanks');
+					}
+					else{
+						alert(JSON.stringify(responseJson));
+					}
+				})
+				 .catch((error) => {
+				  console.error(error);
+				});
+			});
+		}
 	}
 	
 	renderItem = ({item, index}) =>{
@@ -129,7 +171,7 @@ export class CartScreen extends Component{
 				</View>
 				<View style={{width: '50%', alignSelf: 'center', marginTop: 20,marginBottom: 20 }}>
 					<Button
-					  onPress={() => {this.props.navigation.navigate('Checkout',{cart: this.state.cart, tongTien: this.state.tongTien})}}
+					  onPress={() => this.checkoutClick()}
 					  title="Đặt hàng"
 					  color="#ffab23"
 					/>
