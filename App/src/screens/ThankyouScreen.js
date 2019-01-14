@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import{View, StyleSheet,ScrollView,Button,Picker,Image} from "react-native";
+import{View, StyleSheet,ScrollView,Button,Picker,Image,Text} from "react-native";
 import { AppRegistry, TextInput } from 'react-native';
-
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 export class ThankyouScreen extends Component{
 	constructor(props) {
 		super(props);
@@ -21,7 +21,7 @@ export class ThankyouScreen extends Component{
 			<Text h4 style={styles.text1} >{this.state.titleText1}</Text>
 				<Text style={styles.text1}>{this.state.titleText2}</Text>
 				<Button
-				  onPress={this.onPressLearnMore}
+				  onPress={()=>this.props.navigation.navigate('Home')}
 				  title={this.state.BackHome}			 
 				/>
 	

@@ -82,7 +82,7 @@ export class HomeScreen extends Component{
 				<Text style={styles.titleText}>Loại mặt hàng: </Text>
 				<View style={styles.loaiMatHangContainer}>
 				{this.state.loaiMatHangs.map((loaiMatHangs, key) => {
-					if(key <3){
+					if(key <2){
 					 return (
 						 <TouchableOpacity onPress={() => this.onPressLoaiMatHang(loaiMatHangs.id)}>
 							<ItemTypePreview 
@@ -98,7 +98,7 @@ export class HomeScreen extends Component{
 				</View>
 				<View  style={styles.loaiMatHangContainer}>
 				{this.state.loaiMatHangs.map((loaiMatHangs, key) => {
-					if(key >=3){
+					if(key >=2 && key <4){
 					 return (
 						 <TouchableOpacity onPress={() => this.onPressLoaiMatHang(loaiMatHangs.id)}>
 							<ItemTypePreview 

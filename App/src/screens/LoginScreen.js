@@ -49,7 +49,6 @@ export class LoginScreen extends Component{
 				}
 				else{
 					alert(JSON.stringify(responseJson));
-					alert('1');
 				}
 			})
 			 .catch((error) => {
